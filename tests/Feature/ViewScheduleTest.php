@@ -24,4 +24,19 @@ class ViewScheduleTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee($schedule->name);
     }
+
+    /**
+     * A user can view a schedule via slug.
+     *
+     * @return void
+     */
+    public function testUserCanViewScheduleViaSlug()
+    {
+        $schedule = factory(Schedule::class)->create();
+
+        $response = $this->get('/s/' . $schedule->slug);
+
+        $response->assertStatus(200);
+        $response->assertSee($schedule->name);
+    }
 }

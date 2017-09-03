@@ -52,6 +52,20 @@ class ScheduleController extends Controller
     }
 
     /**
+     * Display the specified resource via slug.
+     *
+     * @param  string $slug
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function display($slug)
+    {
+        $schedule = Schedule::where('slug', $slug)->firstOrFail();
+
+        return $this->show($schedule);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  \Departur\Schedule $schedule
