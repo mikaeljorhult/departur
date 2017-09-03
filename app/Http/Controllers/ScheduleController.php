@@ -30,7 +30,8 @@ class ScheduleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +42,8 @@ class ScheduleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Departur\Schedule  $schedule
+     * @param  \Departur\Schedule $schedule
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Schedule $schedule)
@@ -52,7 +54,8 @@ class ScheduleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Departur\Schedule  $schedule
+     * @param  \Departur\Schedule $schedule
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Schedule $schedule)
@@ -63,8 +66,9 @@ class ScheduleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Departur\Schedule  $schedule
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Departur\Schedule $schedule
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Schedule $schedule)
@@ -75,7 +79,8 @@ class ScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Departur\Schedule  $schedule
+     * @param  \Departur\Schedule $schedule
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Schedule $schedule)
