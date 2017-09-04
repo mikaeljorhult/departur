@@ -13,9 +13,7 @@
 
 use Departur\Http\Controllers\ScheduleController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
