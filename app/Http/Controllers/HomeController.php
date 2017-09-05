@@ -2,6 +2,7 @@
 
 namespace Departur\Http\Controllers;
 
+use Departur\Schedule;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,6 +14,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $schedules = Schedule::all();
+
+        return view('home')->with('schedules', $schedules);
     }
 }
