@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $schedules = Schedule::all();
+        $schedules = Schedule::active()->get();
 
         return view('home')->with('schedules', $schedules);
     }

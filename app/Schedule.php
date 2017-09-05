@@ -26,4 +26,17 @@ class Schedule extends Model
         return $this->belongsToMany(\Departur\Calendar::class);
     }
 
+    /**
+     * Return schedules with active calendars.
+     *
+     * @param $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereHas('calendars', function ($query) {
+            $query->active();
+        });
+    }
 }

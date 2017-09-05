@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Departur\Calendar;
 use Departur\Schedule;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,11 +18,22 @@ class ViewScheduleListingTest extends TestCase
      */
     public function testUserCanViewScheduleListing()
     {
-        $schedule = factory(Schedule::class)->create();
+        $activeSchedule = factory(Schedule::class)->create();
+        $activeSchedule->calendars()->saveMany([
+            factory(Calendar::class)->states('active')->create()
+        ]);
+
+        $inactiveScheduleA = factory(Schedule::class)->create();
+        $inactiveScheduleB = factory(Schedule::class)->create();
+        $inactiveScheduleB->calendars()->saveMany([
+            factory(Calendar::class)->states('inactive')->create()
+        ]);
 
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee($schedule->name);
+        $response->assertSee($activeSchedule->name);
+        $response->assertDontSee($inactiveScheduleA->name);
+        $response->assertDontSee($inactiveScheduleB->name);
     }
 }
