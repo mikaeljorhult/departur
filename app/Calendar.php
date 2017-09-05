@@ -29,6 +29,16 @@ class Calendar extends Model
     ];
 
     /**
+     * Return related schedules.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function schedules()
+    {
+        return $this->belongsToMany(\Departur\Schedule::class);
+    }
+
+    /**
      * Return active calendars.
      *
      * @param $query

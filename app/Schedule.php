@@ -15,4 +15,15 @@ class Schedule extends Model
         'name',
         'slug'
     ];
+
+    /**
+     * Return related calendars according to position.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function calendars()
+    {
+        return $this->belongsToMany(\Departur\Calendar::class);
+    }
+
 }
