@@ -39,6 +39,16 @@ class Calendar extends Model
     }
 
     /**
+     * Return related events.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function events()
+    {
+        return $this->hasMany(\Departur\Event::class);
+    }
+
+    /**
      * Return active calendars.
      *
      * @param $query
