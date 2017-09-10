@@ -2,6 +2,8 @@
 
 namespace Departur;
 
+use Departur\Calendar;
+use Departur\Event;
 use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
@@ -23,7 +25,34 @@ class Schedule extends Model
      */
     public function calendars()
     {
-        return $this->belongsToMany(\Departur\Calendar::class);
+        return $this->belongsToMany(Calendar::class);
+    }
+
+    /**
+     * Return events related to attached calendars.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function events()
+    {
+        if ($this->calendars->count() > 0) {
+            $events = Event::whereIn('calendar_id', $this->calendars->pluck('id'))
+                           ->orderBy('start_time')
+                           ->get();
+        }
+
+        return isset($events) ? $events : collect();
+    }
+
+    /**
+     * Return events related to attached calendars.
+     * Convenience function to allow same API as with relationships.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getEventsAttribute()
+    {
+        return $this->events();
     }
 
     /**

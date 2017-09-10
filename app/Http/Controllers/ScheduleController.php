@@ -48,7 +48,10 @@ class ScheduleController extends Controller
      */
     public function show(Schedule $schedule)
     {
-        return $schedule;
+        $schedule->load(['calendars', 'calendars.events']);
+
+        return view('schedules.show')
+            ->with('schedule', $schedule);
     }
 
     /**
