@@ -6,46 +6,22 @@ METHOD:PUBLISH
 X-WR-CALNAME:Recording Cowbell
 X-WR-TIMEZONE:Europe/Stockholm
 X-WR-CALDESC:
+@isset($events)
+@foreach($events as $event)
 BEGIN:VEVENT
-DTSTART:{{ \Carbon\Carbon::now()->addHours(1)->format('Ymd\TH0000\Z') }}
-DTEND:{{ \Carbon\Carbon::now()->addHours(2)->format('Ymd\TH0000\Z') }}
-DTSTAMP:{{ \Carbon\Carbon::now()->subHours(1)->format('Ymd\TH0000\Z') }}
+DTSTART:{{ $event->start_time->format('Ymd\TH0000\Z') }}
+DTEND:{{ $event->end_time->format('Ymd\TH0000\Z') }}
+DTSTAMP:{{ $event->start_time->format('Ymd\TH0000\Z') }}
 UID:UNIQUE_UID@google.com
-CREATED:{{ \Carbon\Carbon::now()->subHours(1)->format('Ymd\TH0000\Z') }}
-DESCRIPTION:Event description
-LAST-MODIFIED:{{ \Carbon\Carbon::now()->subHours(1)->format('Ymd\TH0000\Z') }}
-LOCATION:Event location
+CREATED:{{ \Carbon\Carbon::now()->format('Ymd\TH0000\Z') }}
+DESCRIPTION:{{ $event->description }}
+LAST-MODIFIED:{{ \Carbon\Carbon::now()->format('Ymd\TH0000\Z') }}
+LOCATION:{{ $event->location }}
 SEQUENCE:2
 STATUS:CONFIRMED
-SUMMARY:Event title
+SUMMARY:{{ $event->title }}
 TRANSP:OPAQUE
 END:VEVENT
-BEGIN:VEVENT
-DTSTART:{{ \Carbon\Carbon::now()->subYear()->addHours(1)->format('Ymd\TH0000\Z') }}
-DTEND:{{ \Carbon\Carbon::now()->subYear()->addHours(2)->format('Ymd\TH0000\Z') }}
-DTSTAMP:{{ \Carbon\Carbon::now()->subYear()->subHours(1)->format('Ymd\TH0000\Z') }}
-UID:UNIQUE_UID@google.com
-CREATED:{{ \Carbon\Carbon::now()->subYear()->subHours(1)->format('Ymd\TH0000\Z') }}
-DESCRIPTION:Event description
-LAST-MODIFIED:{{ \Carbon\Carbon::now()->subYear()->subHours(1)->format('Ymd\TH0000\Z') }}
-LOCATION:Event location
-SEQUENCE:2
-STATUS:CONFIRMED
-SUMMARY:Event title
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART:{{ \Carbon\Carbon::now()->addYear()->addHours(1)->format('Ymd\TH0000\Z') }}
-DTEND:{{ \Carbon\Carbon::now()->addYear()->addHours(2)->format('Ymd\TH0000\Z') }}
-DTSTAMP:{{ \Carbon\Carbon::now()->addYear()->subHours(1)->format('Ymd\TH0000\Z') }}
-UID:UNIQUE_UID@google.com
-CREATED:{{ \Carbon\Carbon::now()->addYear()->subHours(1)->format('Ymd\TH0000\Z') }}
-DESCRIPTION:Event description
-LAST-MODIFIED:{{ \Carbon\Carbon::now()->addYear()->subHours(1)->format('Ymd\TH0000\Z') }}
-LOCATION:Event location
-SEQUENCE:2
-STATUS:CONFIRMED
-SUMMARY:Event title
-TRANSP:OPAQUE
-END:VEVENT
+@endforeach
+@endisset
 END:VCALENDAR

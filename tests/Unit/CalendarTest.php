@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Departur\Calendar;
+use Departur\Event;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -40,7 +41,8 @@ class CalendarTest extends TestCase
     public function testEventsAreImportedThroughImport()
     {
         // Setup client and attach responses.
-        $ical    = view('tests.ical')->render();
+        $event   = factory(Event::class)->make();
+        $ical    = view('tests.ical')->with('events', [$event])->render();
         $mock    = new MockHandler([new Response(200, [], $ical)]);
         $handler = HandlerStack::create($mock);
         $client  = new Client(['handler' => $handler]);
@@ -53,9 +55,9 @@ class CalendarTest extends TestCase
         $calendar->import();
 
         $this->assertDatabaseHas('events', [
-            'title'       => 'Event title',
-            'location'    => 'Event location',
-            'description' => 'Event description',
+            'title'       => $event->title,
+            'location'    => $event->location,
+            'description' => $event->description,
         ]);
     }
 }
