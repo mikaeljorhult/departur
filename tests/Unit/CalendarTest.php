@@ -3,6 +3,10 @@
 namespace Tests\Unit;
 
 use Departur\Calendar;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -26,5 +30,32 @@ class CalendarTest extends TestCase
         $this->assertTrue($calendars->contains($activeCalendarA));
         $this->assertTrue($calendars->contains($activeCalendarB));
         $this->assertFalse($calendars->contains($inactiveCalendar));
+    }
+
+    /**
+     * Events are imported to database through import method.
+     *
+     * @return void
+     */
+    public function testEventsAreImportedThroughImport()
+    {
+        // Setup client and attach responses.
+        $ical    = view('tests.ical')->render();
+        $mock    = new MockHandler([new Response(200, [], $ical)]);
+        $handler = HandlerStack::create($mock);
+        $client  = new Client(['handler' => $handler]);
+
+        // Replace Guzzle with mock in service container.
+        app()->instance(Client::class, $client);
+
+        $calendar = factory(Calendar::class)->states('active')->create();
+
+        $calendar->import();
+
+        $this->assertDatabaseHas('events', [
+            'title'       => 'Event title',
+            'location'    => 'Event location',
+            'description' => 'Event description',
+        ]);
     }
 }

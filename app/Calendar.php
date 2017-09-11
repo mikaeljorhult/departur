@@ -2,6 +2,10 @@
 
 namespace Departur;
 
+use Carbon\Carbon;
+use Departur\Event;
+use Departur\Importers\ICalImporter;
+use Departur\Schedule;
 use Illuminate\Database\Eloquent\Model;
 
 class Calendar extends Model
@@ -35,7 +39,7 @@ class Calendar extends Model
      */
     public function schedules()
     {
-        return $this->belongsToMany(\Departur\Schedule::class);
+        return $this->belongsToMany(Schedule::class);
     }
 
     /**
@@ -45,7 +49,7 @@ class Calendar extends Model
      */
     public function events()
     {
-        return $this->hasMany(\Departur\Event::class);
+        return $this->hasMany(Event::class);
     }
 
     /**
@@ -57,9 +61,20 @@ class Calendar extends Model
      */
     public function scopeActive($query)
     {
-        $today = \Carbon\Carbon::today();
+        $today = Carbon::today();
 
         return $query->where('start_date', '<=', $today)
                      ->where('end_date', '>=', $today);
+    }
+
+    public function import()
+    {
+        $importer = new ICalImporter($this->url, $this->start_date, $this->end_date);
+
+        try {
+            $this->events()->saveMany($importer->get());
+        } catch (\Exception $e) {
+            dd('ERROR', $e);
+        }
     }
 }
