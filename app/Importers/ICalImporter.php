@@ -50,7 +50,7 @@ class ICalImporter
     private function parse($body)
     {
         if ($body) {
-            $events   = [];
+            $events   = collect();
             $calendar = Reader::read($body, Reader::OPTION_FORGIVING)
                               ->expand($this->startDate, $this->endDate);
 
