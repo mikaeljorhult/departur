@@ -41,14 +41,9 @@ class CalendarTest extends TestCase
     public function testEventsAreImportedThroughImport()
     {
         // Setup client and attach responses.
-        $event   = factory(Event::class)->make();
-        $ical    = view('tests.ical')->with('events', [$event])->render();
-        $mock    = new MockHandler([new Response(200, [], $ical)]);
-        $handler = HandlerStack::create($mock);
-        $client  = new Client(['handler' => $handler]);
-
-        // Replace Guzzle with mock in service container.
-        app()->instance(Client::class, $client);
+        $event = factory(Event::class)->make();
+        $ical  = view('tests.ical')->with('events', [$event])->render();
+        $this->mockHttpResponses([new Response(200, [], $ical)]);
 
         $calendar = factory(Calendar::class)->states('active')->create();
 
