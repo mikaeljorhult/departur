@@ -68,4 +68,30 @@ class ICalImporterTest extends TestCase
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(0, $returnedEvents);
     }
+
+    /**
+     * Get method throws an error if iCal file is invalid.
+     *
+     * @expectedException Sabre\VObject\ParseException
+     * @return void
+     */
+    public function testErrorIsThrownIfICalIsInvalid()
+    {
+        $this->mockHttpResponses([new Response(200, [], 'invalid-ical')]);
+
+        $importer = new ICalImporter('valid-ical-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $importer->get();
+    }
+
+    /**
+     * Get method throws an error if URL is invalid.
+     *
+     * @expectedException GuzzleHttp\Exception\ConnectException
+     * @return void
+     */
+    public function testErrorIsThrownIfURLIsInvalid()
+    {
+        $importer = new ICalImporter('invalid-ical-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $importer->get();
+    }
 }
