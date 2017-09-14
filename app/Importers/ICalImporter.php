@@ -5,7 +5,7 @@ namespace Departur\Importers;
 use Carbon\Carbon;
 use Departur\Event;
 use GuzzleHttp\Client;
-use Sabre\VObject\Reader;
+use ICal\ICal;
 
 class ICalImporter
 {
@@ -88,23 +88,16 @@ class ICalImporter
      */
     private function parse(string $body)
     {
-        $events   = collect();
-        $calendar = Reader::read($body, Reader::OPTION_FORGIVING)
-                          ->expand($this->startDate, $this->endDate);
+        $calendar = new ICal($body);
 
-        // Add all events to array.
-        if (count($calendar->VEVENT) > 0) {
-            foreach ($calendar->VEVENT as $item) {
-                $events[] = new Event([
-                    'title'       => substr((string)$item->SUMMARY, 0, 255),
-                    'location'    => substr((string)$item->LOCATION, 0, 255),
-                    'description' => (string)$item->DESCRIPTION,
-                    'start_time'  => $item->DTSTART->getDateTime(),
-                    'end_time'    => $item->DTEND->getDateTime()
-                ]);
-            }
-        }
-
-        return $events;
+        return collect($calendar->eventsFromRange($this->startDate, $this->endDate))->map(function ($event) {
+            return new Event([
+                'title'       => substr($event->summary, 0, 255),
+                'location'    => substr($event->location, 0, 255),
+                'description' => $event->description,
+                'start_time'  => Carbon::createFromTimestamp($event->dtstart_array[2]),
+                'end_time'    => Carbon::createFromTimestamp($event->dtend_array[2]),
+            ]);
+        });
     }
 }
