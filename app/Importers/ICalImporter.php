@@ -53,7 +53,11 @@ class ICalImporter
      */
     public function get()
     {
-        return $this->parse((string)$this->request()->getBody());
+        $body = $this->request()->getBody();
+
+        $this->validate($body);
+
+        return $this->parse($body);
     }
 
     /**
@@ -77,6 +81,21 @@ class ICalImporter
         $response = $client->get($this->url());
 
         return $response;
+    }
+
+    /**
+     * @param string $body
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    private function validate(string $body)
+    {
+        if (str_contains($body, 'BEGIN:VCALENDAR') === false) {
+            throw new \Exception('Calendar is not a valid iCal.');
+        }
+
+        return true;
     }
 
     /**

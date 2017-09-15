@@ -5,9 +5,6 @@ namespace Tests\Unit\Importers;
 use Carbon\Carbon;
 use Departur\Event;
 use Departur\Importers\ICalImporter;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
@@ -33,9 +30,9 @@ class ICalImporterTest extends TestCase
      *
      * @return void
      */
-    public function testEventsFromValidICalAreReturned()
+    public function testEventsFromValidCalendarAreReturned()
     {
-        $events = factory(Event::class, 2)->make();
+        $events = factory(Event::class, 2)->make()->sortBy('start_time');
         $ical   = view('tests.ical')->with('events', $events)->render();
         $this->mockHttpResponses([new Response(200, [], $ical)]);
 
@@ -57,7 +54,7 @@ class ICalImporterTest extends TestCase
      *
      * @return void
      */
-    public function testEmptyCollectionIsReturnedFromEmptyICal()
+    public function testEmptyCollectionIsReturnedFromEmptyCalendar()
     {
         $ical = view('tests.ical')->render();
         $this->mockHttpResponses([new Response(200, [], $ical)]);
@@ -72,10 +69,10 @@ class ICalImporterTest extends TestCase
     /**
      * Get method throws an error if iCal file is invalid.
      *
-     * @expectedException Sabre\VObject\ParseException
+     * @expectedException \Exception
      * @return void
      */
-    public function testErrorIsThrownIfICalIsInvalid()
+    public function testErrorIsThrownIfICalendarIsInvalid()
     {
         $this->mockHttpResponses([new Response(200, [], 'invalid-ical')]);
 
@@ -86,7 +83,7 @@ class ICalImporterTest extends TestCase
     /**
      * Get method throws an error if URL is invalid.
      *
-     * @expectedException GuzzleHttp\Exception\ConnectException
+     * @expectedException \GuzzleHttp\Exception\ConnectException
      * @return void
      */
     public function testErrorIsThrownIfURLIsInvalid()
