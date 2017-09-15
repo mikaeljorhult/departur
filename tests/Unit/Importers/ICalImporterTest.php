@@ -69,7 +69,7 @@ class ICalImporterTest extends TestCase
     /**
      * Get method throws an error if iCal file is invalid.
      *
-     * @expectedException \Exception
+     * @expectedException \Departur\Exceptions\InvalidCalendarException
      * @return void
      */
     public function testErrorIsThrownIfICalendarIsInvalid()
@@ -83,7 +83,7 @@ class ICalImporterTest extends TestCase
     /**
      * Get method throws an error if URL is invalid.
      *
-     * @expectedException \GuzzleHttp\Exception\ConnectException
+     * @expectedException \Departur\Exceptions\UnreachableCalendarException
      * @return void
      */
     public function testErrorIsThrownIfURLIsInvalid()

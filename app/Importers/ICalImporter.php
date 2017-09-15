@@ -4,6 +4,8 @@ namespace Departur\Importers;
 
 use Carbon\Carbon;
 use Departur\Event;
+use Departur\Exceptions\InvalidCalendarException;
+use Departur\Exceptions\UnreachableCalendarException;
 use GuzzleHttp\Client;
 use ICal\ICal;
 
@@ -74,11 +76,17 @@ class ICalImporter
      * Retrieve URL for calendar.
      *
      * @return \GuzzleHttp\Psr7\Response
+     * @throws \Departur\Exceptions\UnreachableCalendarException
      */
     private function request()
     {
-        $client   = app(Client::class);
-        $response = $client->get($this->url());
+        $client = app(Client::class);
+
+        try {
+            $response = $client->get($this->url());
+        } catch (\Exception $exception) {
+            throw new UnreachableCalendarException('Calendar is not reachable.');
+        }
 
         return $response;
     }
@@ -87,12 +95,12 @@ class ICalImporter
      * @param string $body
      *
      * @return bool
-     * @throws \Exception
+     * @throws \Departur\Exceptions\InvalidCalendarException
      */
     private function validate(string $body)
     {
         if (str_contains($body, 'BEGIN:VCALENDAR') === false) {
-            throw new \Exception('Calendar is not a valid iCal.');
+            throw new InvalidCalendarException('Calendar is not a valid iCal.');
         }
 
         return true;
