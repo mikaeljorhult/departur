@@ -4,7 +4,7 @@ namespace Departur\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CalendarStoreRequest extends FormRequest
+class ScheduleStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class CalendarStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required'],
+            'slug' => ['required', 'max:100', 'unique:schedules,slug'],
         ];
     }
 }
