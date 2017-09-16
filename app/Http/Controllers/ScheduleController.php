@@ -3,8 +3,8 @@
 namespace Departur\Http\Controllers;
 
 use Departur\Http\Requests\ScheduleStoreRequest;
+use Departur\Http\Requests\ScheduleUpdateRequest;
 use Departur\Schedule;
-use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
@@ -86,20 +86,22 @@ class ScheduleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Departur\Schedule $schedule
+     * @param \Departur\Http\Requests\ScheduleUpdateRequest $request
+     * @param \Departur\Schedule $schedule
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Schedule $schedule)
+    public function update(ScheduleUpdateRequest $request, Schedule $schedule)
     {
-        //
+        $schedule->update($request->all());
+
+        return redirect('/schedules');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Departur\Schedule $schedule
+     * @param \Departur\Schedule $schedule
      *
      * @return \Illuminate\Http\Response
      */
