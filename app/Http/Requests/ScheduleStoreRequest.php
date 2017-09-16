@@ -3,6 +3,7 @@
 namespace Departur\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ScheduleStoreRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class ScheduleStoreRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'slug' => ['required', 'max:100', 'unique:schedules,slug'],
+            'slug' => ['required', 'max:100', Rule::unique('schedules')],
         ];
     }
 }
