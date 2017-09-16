@@ -2,6 +2,7 @@
 
 namespace Departur\Http\Controllers;
 
+use Departur\Http\Requests\ScheduleDestroyRequest;
 use Departur\Http\Requests\ScheduleStoreRequest;
 use Departur\Http\Requests\ScheduleUpdateRequest;
 use Departur\Schedule;
@@ -102,11 +103,13 @@ class ScheduleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \Departur\Schedule $schedule
+     * @param \Departur\Http\Requests\ScheduleDestroyRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Schedule $schedule)
+    public function destroy(Schedule $schedule, ScheduleDestroyRequest $request)
     {
-        //
+        $schedule->delete();
+        return redirect('/schedules');
     }
 }
