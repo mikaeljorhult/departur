@@ -2,6 +2,7 @@
 
 namespace Departur\Http\Controllers;
 
+use Departur\Http\Requests\CalendarStoreRequest;
 use Departur\Schedule;
 use Illuminate\Http\Request;
 
@@ -30,13 +31,15 @@ class ScheduleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Departur\Http\Requests\CalendarStoreRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CalendarStoreRequest $request)
     {
-        //
+        Schedule::create($request->all());
+
+        return redirect('schedules.index');
     }
 
     /**
