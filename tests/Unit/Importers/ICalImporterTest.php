@@ -91,4 +91,18 @@ class ICalImporterTest extends TestCase
         $importer = new ICalImporter('invalid-ical-url', Carbon::now()->subYear(), Carbon::now()->addYear());
         $importer->get();
     }
+
+    /**
+     * Get method throws an error if URL is not found.
+     *
+     * @expectedException \Departur\Exceptions\UnreachableCalendarException
+     * @return void
+     */
+    public function testErrorIsThrownIfURLNotFound()
+    {
+        $this->mockHttpResponses([new Response(404, [], 'ical-not-found')]);
+
+        $importer = new ICalImporter('ical-not-found-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $importer->get();
+    }
 }
