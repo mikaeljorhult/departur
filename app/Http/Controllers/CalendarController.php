@@ -3,6 +3,7 @@
 namespace Departur\Http\Controllers;
 
 use Departur\Calendar;
+use Departur\Http\Requests\CalendarDestroyRequest;
 use Departur\Http\Requests\CalendarStoreRequest;
 use Departur\Http\Requests\CalendarUpdateRequest;
 use Illuminate\Http\Request;
@@ -86,11 +87,13 @@ class CalendarController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Departur\Calendar $calendar
+     * @param \Departur\Http\Requests\CalendarDestroyRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Calendar $calendar)
+    public function destroy(Calendar $calendar, CalendarDestroyRequest $request)
     {
-        //
+        $calendar->delete();
+        return redirect('/calendars');
     }
 }

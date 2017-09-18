@@ -38,8 +38,9 @@ class DestroyScheduleTest extends TestCase
     {
         $schedule = factory(Schedule::class)->create();
 
-        $this->delete('/schedules/' . $schedule->id);
+        $response = $this->delete('/schedules/' . $schedule->id);
 
+        $response->assertStatus(403);
         $this->assertDatabaseHas('schedules', [
             'name' => $schedule->name
         ]);
