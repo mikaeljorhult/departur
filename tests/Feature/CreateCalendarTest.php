@@ -20,16 +20,16 @@ class CreateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/calendars', [
-            'name' => 'Test Calendar',
+            'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
-            'end_date' => '2017-12-01',
-            'url' => 'http://example.com/calendar',
+            'end_date'   => '2017-12-01',
+            'url'        => 'http://example.com/calendar',
         ]);
 
         $response->assertRedirect('/calendars');
         $this->assertDatabaseHas('calendars', [
             'name' => 'Test Calendar',
-            'url' => 'http://example.com/calendar',
+            'url'  => 'http://example.com/calendar',
         ]);
     }
 
@@ -41,16 +41,16 @@ class CreateCalendarTest extends TestCase
     public function testVisitorCanNotCreateCalendar()
     {
         $response = $this->post('/calendars', [
-            'name' => 'Test Calendar',
+            'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
-            'end_date' => '2017-12-01',
-            'url' => 'http://example.com/calendar',
+            'end_date'   => '2017-12-01',
+            'url'        => 'http://example.com/calendar',
         ]);
 
         $response->assertStatus(403);
         $this->assertDatabaseMissing('calendars', [
             'name' => 'Test Calendar',
-            'url' => 'http://example.com/calendar',
+            'url'  => 'http://example.com/calendar',
         ]);
     }
 
@@ -65,8 +65,8 @@ class CreateCalendarTest extends TestCase
 
         $response = $this->post('/calendars', [
             'start_date' => '2017-01-01',
-            'end_date' => '2017-12-01',
-            'url' => 'http://example.com/calendar',
+            'end_date'   => '2017-12-01',
+            'url'        => 'http://example.com/calendar',
         ]);
 
         $response->assertRedirect();
@@ -85,9 +85,9 @@ class CreateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/calendars', [
-            'name' => 'Test Calendar',
+            'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
-            'end_date' => '2017-12-01',
+            'end_date'   => '2017-12-01',
         ]);
 
         $response->assertRedirect();
@@ -106,10 +106,10 @@ class CreateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/calendars', [
-            'name' => 'Test Calendar',
+            'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
-            'end_date' => '2017-12-01',
-            'url' => 'not-a-url',
+            'end_date'   => '2017-12-01',
+            'url'        => 'not-a-url',
         ]);
 
         $response->assertRedirect();
@@ -128,9 +128,9 @@ class CreateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/calendars', [
-            'name' => 'Test Calendar',
+            'name'     => 'Test Calendar',
             'end_date' => '2017-12-01',
-            'url' => 'http://example.com/calendar',
+            'url'      => 'http://example.com/calendar',
         ]);
 
         $response->assertRedirect();
@@ -149,10 +149,10 @@ class CreateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/calendars', [
-            'name' => 'Test Calendar',
+            'name'       => 'Test Calendar',
             'start_date' => 'not-a-date',
-            'end_date' => '2017-12-01',
-            'url' => 'http://example.com/calendar',
+            'end_date'   => '2017-12-01',
+            'url'        => 'http://example.com/calendar',
         ]);
 
         $response->assertRedirect();
@@ -171,9 +171,9 @@ class CreateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/calendars', [
-            'name' => 'Test Calendar',
+            'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
-            'url' => 'http://example.com/calendar',
+            'url'        => 'http://example.com/calendar',
         ]);
 
         $response->assertRedirect();
@@ -192,10 +192,10 @@ class CreateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/calendars', [
-            'name' => 'Test Calendar',
+            'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
-            'end_date' => 'not-a-date',
-            'url' => 'http://example.com/calendar',
+            'end_date'   => 'not-a-date',
+            'url'        => 'http://example.com/calendar',
         ]);
 
         $response->assertRedirect();
@@ -214,10 +214,10 @@ class CreateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/calendars', [
-            'name' => 'Test Calendar',
+            'name'       => 'Test Calendar',
             'start_date' => '2017-12-01',
-            'end_date' => '2017-01-01',
-            'url' => 'http://example.com/calendar',
+            'end_date'   => '2017-01-01',
+            'url'        => 'http://example.com/calendar',
         ]);
 
         $response->assertRedirect();

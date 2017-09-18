@@ -4,6 +4,7 @@ namespace Departur\Http\Controllers;
 
 use Departur\Calendar;
 use Departur\Http\Requests\CalendarStoreRequest;
+use Departur\Http\Requests\CalendarUpdateRequest;
 use Illuminate\Http\Request;
 
 class CalendarController extends Controller
@@ -69,14 +70,16 @@ class CalendarController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Departur\Http\Requests\CalendarUpdateRequest $request
      * @param  \Departur\Calendar $calendar
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Calendar $calendar)
+    public function update(CalendarUpdateRequest $request, Calendar $calendar)
     {
-        //
+        $calendar->update($request->all());
+
+        return redirect('/calendars');
     }
 
     /**

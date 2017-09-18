@@ -10,8 +10,8 @@ $factory->define(Calendar::class, function (Faker $faker) {
 
     return [
         'name'       => $faker->words(4, true),
-        'start_date' => $startDate,
-        'end_date'   => $endDate,
+        'start_date' => $startDate->format('Y-m-d'),
+        'end_date'   => $endDate->format('Y-m-d'),
         'url'        => $faker->url,
     ];
 });
