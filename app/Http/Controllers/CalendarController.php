@@ -17,7 +17,10 @@ class CalendarController extends Controller
      */
     public function index()
     {
-        //
+        $calendars = Calendar::all();
+
+        return view('calendars.index')
+            ->with('calendars', $calendars);
     }
 
     /**
@@ -27,7 +30,7 @@ class CalendarController extends Controller
      */
     public function create()
     {
-        //
+        return view('calendars.create');
     }
 
     /**
@@ -53,7 +56,8 @@ class CalendarController extends Controller
      */
     public function show(Calendar $calendar)
     {
-        //
+        return view('calendars.show')
+            ->with('calendar', $calendar);
     }
 
     /**
@@ -65,7 +69,8 @@ class CalendarController extends Controller
      */
     public function edit(Calendar $calendar)
     {
-        //
+        return view('calendars.edit')
+            ->with('calendar', $calendar);
     }
 
     /**
