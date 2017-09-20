@@ -42,7 +42,7 @@ class UpdateCalendarTest extends TestCase
      *
      * @return void
      */
-    public function testVisitorCanNotCreateCalendar()
+    public function testVisitorCanNotUpdateCalendar()
     {
         $calendar = factory(Calendar::class)->create([
             'name' => 'Test Calendar',

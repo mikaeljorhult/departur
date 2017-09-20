@@ -40,7 +40,7 @@ class UpdateScheduleTest extends TestCase
      *
      * @return void
      */
-    public function testVisitorCanNotCreateSchedule()
+    public function testVisitorCanNotUpdateSchedule()
     {
         $schedule = factory(Schedule::class)->create([
             'name' => 'Test Schedule',

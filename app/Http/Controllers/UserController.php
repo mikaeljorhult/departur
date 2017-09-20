@@ -3,6 +3,7 @@
 namespace Departur\Http\Controllers;
 
 use Departur\Http\Requests\UserStoreRequest;
+use Departur\Http\Requests\UserUpdateRequest;
 use Departur\User;
 use Illuminate\Http\Request;
 
@@ -71,14 +72,22 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param \Departur\Http\Requests\UserUpdateRequest $request
+     * @param \Departur\User $user
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        //
+        $user->fill($request->all());
+
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->save();
+
+        return redirect('/users');
     }
 
     /**
