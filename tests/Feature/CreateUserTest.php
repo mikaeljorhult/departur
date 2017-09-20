@@ -20,9 +20,10 @@ class CreateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/users', [
-            'name'     => 'Test User',
-            'email'    => 'test@departur.se',
-            'password' => 'password',
+            'name'                  => 'Test User',
+            'email'                 => 'test@departur.se',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
         ]);
 
         $response->assertRedirect('/users');
@@ -40,9 +41,10 @@ class CreateUserTest extends TestCase
     public function testVisitorCanNotCreateUser()
     {
         $response = $this->post('/users', [
-            'name'     => 'Test User',
-            'email'    => 'test@departur.se',
-            'password' => 'password',
+            'name'                  => 'Test User',
+            'email'                 => 'test@departur.se',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
         ]);
 
         $response->assertStatus(403);
@@ -62,9 +64,10 @@ class CreateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/users', [
-            'name'     => '',
-            'email'    => 'test@departur.se',
-            'password' => 'password',
+            'name'                  => '',
+            'email'                 => 'test@departur.se',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
         ]);
 
         $response->assertRedirect();
@@ -83,9 +86,10 @@ class CreateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/users', [
-            'name'     => 'Test User',
-            'email'    => '',
-            'password' => 'password',
+            'name'                  => 'Test User',
+            'email'                 => '',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
         ]);
 
         $response->assertRedirect();
@@ -104,9 +108,10 @@ class CreateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/users', [
-            'name'     => 'Test User',
-            'email'    => 'not-a-valid-email',
-            'password' => 'password',
+            'name'                  => 'Test User',
+            'email'                 => 'not-a-valid-email',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
         ]);
 
         $response->assertRedirect();
@@ -126,9 +131,10 @@ class CreateUserTest extends TestCase
         factory(User::class)->create(['email' => 'test@departur.se']);
 
         $response = $this->post('/users', [
-            'name'     => 'Test User',
-            'email'    => 'test@departur.se',
-            'password' => 'password',
+            'name'                  => 'Test User',
+            'email'                 => 'test@departur.se',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
         ]);
 
         $response->assertRedirect();

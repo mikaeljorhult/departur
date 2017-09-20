@@ -154,9 +154,10 @@ class UpdateUserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->put('/users/' . $user->id, [
-            'name'     => 'Updated User',
-            'email'    => $user->email,
-            'password' => 'new-password'
+            'name'                  => 'Updated User',
+            'email'                 => $user->email,
+            'password'              => 'new-password',
+            'password_confirmation' => 'new-password',
         ]);
 
         $response->assertRedirect();
