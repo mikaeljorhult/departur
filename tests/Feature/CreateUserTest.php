@@ -20,8 +20,8 @@ class CreateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/users', [
-            'name'  => 'Test User',
-            'email' => 'test@departur.se',
+            'name'     => 'Test User',
+            'email'    => 'test@departur.se',
             'password' => 'password',
         ]);
 
@@ -40,8 +40,8 @@ class CreateUserTest extends TestCase
     public function testVisitorCanNotCreateUser()
     {
         $response = $this->post('/users', [
-            'name'  => 'Test User',
-            'email' => 'test@departur.se',
+            'name'     => 'Test User',
+            'email'    => 'test@departur.se',
             'password' => 'password',
         ]);
 
@@ -62,14 +62,14 @@ class CreateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/users', [
-            'name'  => '',
-            'email' => 'test@departur.se',
+            'name'     => '',
+            'email'    => 'test@departur.se',
             'password' => 'password',
         ]);
 
         $response->assertRedirect();
         $this->assertDatabaseMissing('users', [
-            'name'  => 'Test User',
+            'name' => 'Test User',
         ]);
     }
 
@@ -83,14 +83,14 @@ class CreateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/users', [
-            'name'  => 'Test User',
-            'email' => '',
+            'name'     => 'Test User',
+            'email'    => '',
             'password' => 'password',
         ]);
 
         $response->assertRedirect();
         $this->assertDatabaseMissing('users', [
-            'name'  => 'Test User',
+            'name' => 'Test User',
         ]);
     }
 
@@ -104,14 +104,14 @@ class CreateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $response = $this->post('/users', [
-            'name'  => 'Test User',
-            'email' => 'not-a-valid-email',
+            'name'     => 'Test User',
+            'email'    => 'not-a-valid-email',
             'password' => 'password',
         ]);
 
         $response->assertRedirect();
         $this->assertDatabaseMissing('users', [
-            'name'  => 'Test User',
+            'name' => 'Test User',
         ]);
     }
 
@@ -126,14 +126,14 @@ class CreateUserTest extends TestCase
         factory(User::class)->create(['email' => 'test@departur.se']);
 
         $response = $this->post('/users', [
-            'name'  => 'Test User',
-            'email' => 'test@departur.se',
+            'name'     => 'Test User',
+            'email'    => 'test@departur.se',
             'password' => 'password',
         ]);
 
         $response->assertRedirect();
         $this->assertDatabaseMissing('users', [
-            'name'  => 'Test User',
+            'name' => 'Test User',
         ]);
     }
 }

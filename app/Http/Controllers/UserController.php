@@ -2,10 +2,10 @@
 
 namespace Departur\Http\Controllers;
 
+use Departur\Http\Requests\UserDestroyRequest;
 use Departur\Http\Requests\UserStoreRequest;
 use Departur\Http\Requests\UserUpdateRequest;
 use Departur\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -93,12 +93,14 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param \Departur\User $user
+     * @param \Departur\Http\Requests\UserDestroyRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user, UserDestroyRequest $request)
     {
-        //
+        $user->delete();
+        return redirect('/users');
     }
 }
