@@ -11,8 +11,6 @@
 |
 */
 
-use Departur\Http\Controllers\ScheduleController;
-
 Route::get('/', 'HomeController@index');
 
 Auth::routes();
@@ -22,3 +20,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('schedules', 'ScheduleController');
 Route::get('/s/{slug}', 'ScheduleController@display');
 Route::resource('calendars', 'CalendarController');
+Route::resource('users', 'UserController');
