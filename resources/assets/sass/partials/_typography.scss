@@ -1,0 +1,25 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #293476;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+a {
+  text-decoration: none;
+}
+
+.logo {
+  text-transform: uppercase;
+}
+
+main > header {
+  h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+}

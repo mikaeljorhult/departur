@@ -14,11 +14,9 @@
 
 <body>
     <header>
-        <h1>
-            <a class="logo" href="{{ url('/') }}">
-                {{ config('app.name', 'Departur') }}
-            </a>
-        </h1>
+        <a class="logo" href="{{ url('/') }}">
+            {{ config('app.name', 'Departur') }}
+        </a>
 
         <nav class="main-navigation">
             <ul>
@@ -41,15 +39,7 @@
     </header>
 
     <main class="main-content">
-        <header>
-
-        </header>
-
         @yield('content')
-
-        <footer>
-
-        </footer>
     </main>
 
     <script src="{{ asset('js/app.js') }}"></script>

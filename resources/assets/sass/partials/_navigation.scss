@@ -1,0 +1,19 @@
+.main-navigation {
+  ul {
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+    padding: .5em;
+    text-transform: uppercase;
+  }
+
+  @media screen and (min-width: 769px) {
+    li {
+      display: block;
+      padding: 1em;
+      text-align: left;
+    }
+  }
+}
