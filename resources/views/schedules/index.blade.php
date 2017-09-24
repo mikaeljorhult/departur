@@ -36,6 +36,6 @@
     </section>
 
     <footer>
-        <a href="{{ route('schedules.create') }}">New Schedule</a>
+        <a href="{{ route('schedules.create') }}" class="button button-outline">New Schedule</a>
     </footer>
 @endsection

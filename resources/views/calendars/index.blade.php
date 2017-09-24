@@ -38,6 +38,6 @@
     </section>
 
     <footer>
-        <a href="{{ route('calendars.create') }}">New Calendar</a>
+        <a href="{{ route('calendars.create') }}" class="button button-outline">New Calendar</a>
     </footer>
 @endsection

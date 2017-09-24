@@ -36,6 +36,6 @@
     </section>
 
     <footer>
-        <a href="{{ route('users.create') }}">New User</a>
+        <a href="{{ route('users.create') }}" class="button button-outline">New User</a>
     </footer>
 @endsection

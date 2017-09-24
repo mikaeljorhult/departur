@@ -1,7 +1,7 @@
 body {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   margin: 0 1rem;
 
   > * {
@@ -9,16 +9,11 @@ body {
   }
 }
 
-body > header {
-  text-align: center;
-}
-
 main {
-  padding: .25rem 0;
   background-color: #fdfffe;
 
   > * {
-    padding: 1em 2em;
+    padding: 2em;
   }
 
   > header {
@@ -32,19 +27,20 @@ main {
   }
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 40.0rem) {
   body {
     flex-direction: row;
+    align-items: flex-start;
     justify-content: space-between;
     margin: 4rem;
   }
 
   body > header {
-    flex: 0 0 10rem;
-    margin-right: 1rem;
+    flex: 0 0 20rem;
+    margin-right: 2rem;
   }
 
   body > main {
-    box-shadow: 0 0 1.5rem rgba(0,0,0,.25);
+    box-shadow: 0 0 1.5rem rgba(0, 0, 0, .25);
   }
 }
