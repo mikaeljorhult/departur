@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-    <main class="container-fluid">
-        <div class="page-header">
-            <h1>Create User</h1>
-        </div>
+    <header>
+        <h1>Users<span> | New</span></h1>
+    </header>
 
+    <section>
         {!! Form::open(['route' => 'users.store']) !!}
-            @include('users._form', ['submitButtonText' => 'Create User'])
+            @include('users._form', ['submitButtonText' => 'Create'])
         {!! Form::close() !!}
-    </main>
+    </section>
 @endsection

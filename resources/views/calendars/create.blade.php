@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-    <main class="container-fluid">
-        <div class="page-header">
-            <h1>Create Calendar</h1>
-        </div>
+    <header>
+        <h1>Calendars<span> | New</span></h1>
+    </header>
 
+    <section>
         {!! Form::open(['route' => 'calendars.store']) !!}
-            @include('calendars._form', ['submitButtonText' => 'Create Calendar'])
+            @include('calendars._form', ['submitButtonText' => 'Create'])
         {!! Form::close() !!}
-    </main>
+    </section>
 @endsection

@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-    <main class="container-fluid">
-        <div class="page-header">
-            <h1>Create Schedule</h1>
-        </div>
+    <header>
+        <h1>Schedules<span> | New</span></h1>
+    </header>
 
+    <section>
         {!! Form::open(['route' => 'schedules.store']) !!}
-            @include('schedules._form', ['submitButtonText' => 'Create Schedule'])
+            @include('schedules._form', ['submitButtonText' => 'Create'])
         {!! Form::close() !!}
-    </main>
+    </section>
 @endsection

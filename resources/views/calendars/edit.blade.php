@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-    <main class="container-fluid">
-        <div class="page-header">
-            <h1>Edit {{ $calendar->name }}</h1>
-        </div>
+    <header>
+        <h1>Calendars<span> | {{ $calendar->name }}</span></h1>
+    </header>
 
+    <section>
         {!! Form::model($calendar, ['route' => ['calendars.update', $calendar->id], 'method' => 'PUT' ]) !!}
-            @include('calendars._form', ['submitButtonText' => 'Update Calendar'])
+            @include('calendars._form', ['submitButtonText' => 'Update'])
         {!! Form::close() !!}
-    </main>
+    </section>
 @endsection

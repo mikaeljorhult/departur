@@ -20,10 +20,9 @@
                 @forelse($users as $user)
                     <tr>
                         <th scope="row">&nbsp;</th>
-                        <td>{{ $user->email }}</td>
+                        <td><a href="{{ route('users.edit', $user) }}">{{ $user->email }}</a></td>
                         <td>{{ $user->name }}</td>
                         <td>
-                            <a href="{{ route('users.edit', $user) }}">E</a>
                             <a href="{{ route('users.destroy', $user) }}">D</a>
                         </td>
                     </tr>

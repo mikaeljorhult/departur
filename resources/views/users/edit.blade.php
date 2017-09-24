@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-    <main class="container-fluid">
-        <div class="page-header">
-            <h1>Edit {{ $user->name }}</h1>
-        </div>
+    <header>
+        <h1>Users<span> | {{ $user->name }}</span></h1>
+    </header>
 
+    <section>
         {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'PUT' ]) !!}
-            @include('users._form', ['submitButtonText' => 'Update User'])
+            @include('users._form', ['submitButtonText' => 'Update'])
         {!! Form::close() !!}
-    </main>
+    </section>
 @endsection
