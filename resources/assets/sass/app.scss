@@ -1,8 +1,5 @@
 @import '../../../node_modules/normalize.css/normalize.css';
 @import '../../../node_modules/milligram/src/milligram.sass';
 
-html {
-  height: 100%;
-  background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
-  background-attachment: fixed;
-}
+// Shared styles.
+@import './partials/shared';

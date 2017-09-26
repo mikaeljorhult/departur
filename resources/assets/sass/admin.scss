@@ -1,14 +1,11 @@
 @import '../../../node_modules/normalize.css/normalize.css';
 @import '../../../node_modules/milligram/src/milligram.sass';
 
-html {
-  height: 100%;
-  background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
-  background-attachment: fixed;
-}
+// Shared styles.
+@import './partials/shared';
 
 // Partials.
-@import './partials/layout';
-@import './partials/typography';
-@import './partials/tables';
-@import './partials/navigation';
+@import './partials/admin/layout';
+@import './partials/admin/typography';
+@import './partials/admin/tables';
+@import './partials/admin/navigation';
