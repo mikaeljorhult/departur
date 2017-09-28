@@ -56,6 +56,18 @@ class Schedule extends Model
     }
 
     /**
+     * Make slug attribute lowercase when set.
+     *
+     * @param string $value
+     *
+     * @return void
+     */
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = strtolower($value);
+    }
+
+    /**
      * Return schedules with active calendars.
      *
      * @param $query

@@ -127,4 +127,24 @@ class CreateScheduleTest extends TestCase
             'name' => 'Test Schedule',
         ]);
     }
+
+    /**
+     * Schedule slug is converted to lowercase.
+     *
+     * @return void
+     */
+    public function testSlugIsMadeLowercase()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->post('/schedules', [
+            'name' => 'Test Schedule',
+            'slug' => 'TEST-schedule',
+        ]);
+
+        $response->assertRedirect('/schedules');
+        $this->assertDatabaseHas('schedules', [
+            'slug' => 'test-schedule',
+        ]);
+    }
 }
