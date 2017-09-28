@@ -13,40 +13,47 @@
 </head>
 
 <body>
-    <h1>
-        <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Departur') }}
-        </a>
-    </h1>
+    <header>
+        <h1>
+            <a href="{{ url('/') }}">
+                {{ config('app.name', 'Departur') }}
+            </a>
+        </h1>
 
-    <ul>
-        @guest
-            <li><a href="{{ route('login') }}">Login</a></li>
-            <li><a href="{{ route('register') }}">Register</a></li>
-        @else
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                   aria-expanded="false">
-                    {{ Auth::user()->name }} <span class="caret"></span>
-                </a>
-            </li>
+        <ul>
+            @guest
+                <li><a href="{{ route('login') }}">Login</a></li>
+                <li><a href="{{ route('register') }}">Register</a></li>
+            @else
+                <li>
+                    <a href="{{ route('home') }}">
+                        {{ auth()->user()->name }}
+                    </a>
+                </li>
 
-            <li>
-                <a href="{{ route('logout') }}"
-                   onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
+                <li>
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
 
-                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                      style="display: none;">
-                    {{ csrf_field() }}
-                </form>
-            </li>
-        @endguest
-    </ul>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                          style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </li>
+            @endguest
+        </ul>
+    </header>
 
-    @yield('content')
+    <main>
+        @yield('content')
+    </main>
+
+    <footer>
+        Powered by <a href="http://departur.se">Departur</a>.
+    </footer>
 
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

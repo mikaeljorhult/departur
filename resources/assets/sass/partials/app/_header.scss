@@ -1,0 +1,24 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  h1 {
+    font-size: 3.6rem;
+    line-height: 1.25;
+  }
+
+  ul {
+    display: flex;
+    margin: 0;
+    list-style-type: none;
+
+    li {
+      margin-left: 1rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
