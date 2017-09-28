@@ -2,8 +2,6 @@
 
 namespace Departur;
 
-use Departur\Calendar;
-use Departur\Event;
 use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model

@@ -37,6 +37,6 @@ class Event extends Model
      */
     public function calendar()
     {
-        return $this->belongsTo(\Departur\Calendar::class);
+        return $this->belongsTo(Calendar::class);
     }
 }

@@ -3,13 +3,14 @@
 namespace Departur;
 
 use Carbon\Carbon;
-use Departur\Event;
+use Collective\Html\Eloquent\FormAccessible;
 use Departur\Importers\ICalImporter;
-use Departur\Schedule;
 use Illuminate\Database\Eloquent\Model;
 
 class Calendar extends Model
 {
+    use FormAccessible;
+
     /**
      * The attributes that are available for mass assignment.
      *
@@ -50,6 +51,30 @@ class Calendar extends Model
     public function events()
     {
         return $this->hasMany(Event::class);
+    }
+
+    /**
+     * Format start date when displayed in form.
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function formStartDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
+
+    /**
+     * Format end date when displayed in form.
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function formEndDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
     }
 
     /**
