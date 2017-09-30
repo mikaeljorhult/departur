@@ -26,8 +26,8 @@
                 <li><a href="{{ route('register') }}">Register</a></li>
             @else
                 <li>
-                    <a href="{{ route('home') }}">
-                        {{ auth()->user()->name }}
+                    <a href="{{ route('admin') }}">
+                        Administration
                     </a>
                 </li>
 

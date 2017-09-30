@@ -14,7 +14,7 @@
 
 <body>
     <header>
-        <a class="logo" href="{{ url('/') }}">
+        <a class="logo" href="{{ route('admin') }}">
             {{ config('app.name', 'Departur') }}
         </a>
 
