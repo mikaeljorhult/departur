@@ -44,7 +44,7 @@ class CreateScheduleTest extends TestCase
             'slug' => 'test-schedule',
         ]);
 
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
         $this->assertDatabaseMissing('schedules', [
             'name' => 'Test Schedule',
             'slug' => 'test-schedule',

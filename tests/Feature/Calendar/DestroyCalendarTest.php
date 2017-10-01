@@ -40,7 +40,7 @@ class DestroyCalendarTest extends TestCase
 
         $response = $this->delete('/calendars/' . $calendar->id);
 
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
         $this->assertDatabaseHas('calendars', [
             'name' => $calendar->name
         ]);

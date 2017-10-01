@@ -10,6 +10,16 @@ use Departur\Schedule;
 class ScheduleController extends Controller
 {
     /**
+     * Constructor.
+     *
+     * Limits access to authenticated users.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['display', 'show']);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -114,6 +124,7 @@ class ScheduleController extends Controller
     public function destroy(Schedule $schedule, ScheduleDestroyRequest $request)
     {
         $schedule->delete();
+
         return redirect('/schedules');
     }
 }

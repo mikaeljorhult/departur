@@ -47,7 +47,7 @@ class CreateUserTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
         $this->assertDatabaseMissing('users', [
             'name'  => 'Test User',
             'email' => 'test@departur.se',

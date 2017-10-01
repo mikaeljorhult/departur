@@ -51,7 +51,7 @@ class UpdateScheduleTest extends TestCase
             'slug' => $schedule->slug,
         ]);
 
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
         $this->assertDatabaseMissing('schedules', [
             'name' => 'Updated Schedule',
         ]);

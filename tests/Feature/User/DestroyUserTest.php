@@ -39,7 +39,7 @@ class DestroyUserTest extends TestCase
 
         $response = $this->delete('/users/' . $user->id);
 
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
         $this->assertDatabaseHas('users', [
             'name' => $user->name
         ]);

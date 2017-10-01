@@ -51,7 +51,7 @@ class UpdateUserTest extends TestCase
             'email' => $user->email,
         ]);
 
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
         $this->assertDatabaseMissing('users', [
             'name' => 'Updated User',
         ]);

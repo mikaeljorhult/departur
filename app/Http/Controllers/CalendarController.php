@@ -11,6 +11,16 @@ use Illuminate\Http\Request;
 class CalendarController extends Controller
 {
     /**
+     * Constructor.
+     *
+     * Limits access to authenticated users.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -99,6 +109,7 @@ class CalendarController extends Controller
     public function destroy(Calendar $calendar, CalendarDestroyRequest $request)
     {
         $calendar->delete();
+
         return redirect('/calendars');
     }
 }

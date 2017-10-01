@@ -10,6 +10,16 @@ use Departur\User;
 class UserController extends Controller
 {
     /**
+     * Constructor.
+     *
+     * Limits access to authenticated users.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -106,6 +116,7 @@ class UserController extends Controller
     public function destroy(User $user, UserDestroyRequest $request)
     {
         $user->delete();
+
         return redirect('/users');
     }
 }

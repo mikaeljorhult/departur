@@ -47,7 +47,7 @@ class CreateCalendarTest extends TestCase
             'url'        => 'http://example.com/calendar',
         ]);
 
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
         $this->assertDatabaseMissing('calendars', [
             'name' => 'Test Calendar',
             'url'  => 'http://example.com/calendar',

@@ -40,7 +40,7 @@ class DestroyScheduleTest extends TestCase
 
         $response = $this->delete('/schedules/' . $schedule->id);
 
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
         $this->assertDatabaseHas('schedules', [
             'name' => $schedule->name
         ]);
