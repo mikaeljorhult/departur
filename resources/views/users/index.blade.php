@@ -23,7 +23,9 @@
                         <td><a href="{{ route('users.edit', $user) }}">{{ $user->email }}</a></td>
                         <td>{{ $user->name }}</td>
                         <td>
-                            <a href="{{ route('users.destroy', $user) }}">D</a>
+                            @unless(auth()->user()->is($user))
+                                <a href="{{ route('users.destroy', $user) }}">D</a>
+                            @endunless
                         </td>
                     </tr>
                 @empty
