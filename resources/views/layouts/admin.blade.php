@@ -20,10 +20,20 @@
 
         <nav class="main-navigation">
             <ul>
-                <li><a href="{{ route('schedules.index') }}">Schedules</a></li>
-                <li><a href="{{ route('calendars.index') }}">Calendars</a></li>
-                <li><a href="{{ route('users.index') }}">Users</a></li>
                 <li>
+                    <i class="icon" data-icon="columns"></i>
+                    <a href="{{ route('schedules.index') }}">Schedules</a>
+                </li>
+                <li>
+                    <i class="icon" data-icon="calendar"></i>
+                    <a href="{{ route('calendars.index') }}">Calendars</a>
+                </li>
+                <li>
+                    <i class="icon" data-icon="user"></i>
+                    <a href="{{ route('users.index') }}">Users</a>
+                </li>
+                <li>
+                    <i class="icon" data-icon="logout"></i>
                     <a href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout

@@ -1,0 +1,1 @@
+import icons from './modules/icons';
