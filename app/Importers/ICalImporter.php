@@ -8,6 +8,7 @@ use Departur\Exceptions\InvalidCalendarException;
 use Departur\Exceptions\UnreachableCalendarException;
 use GuzzleHttp\Client;
 use ICal\ICal;
+use Illuminate\Support\Facades\Cache;
 
 class ICalImporter
 {
@@ -80,15 +81,19 @@ class ICalImporter
      */
     private function request()
     {
-        $client = app(Client::class);
+        $url = $this->url();
 
-        try {
-            $response = $client->get($this->url());
-        } catch (\Exception $exception) {
-            throw new UnreachableCalendarException('Calendar is not reachable.');
-        }
+        return Cache::remember('calendar-' . $url, 10, function () use ($url) {
+            $client = app(Client::class);
 
-        return $response;
+            try {
+                $response = $client->get($url);
+            } catch (\Exception $exception) {
+                throw new UnreachableCalendarException('Calendar is not reachable.');
+            }
+
+            return $response;
+        });
     }
 
     /**

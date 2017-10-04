@@ -7,6 +7,7 @@ use Departur\Event;
 use Departur\Importers\ICalImporter;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -104,5 +105,27 @@ class ICalImporterTest extends TestCase
 
         $importer = new ICalImporter('ical-not-found-url', Carbon::now()->subYear(), Carbon::now()->addYear());
         $importer->get();
+    }
+
+    /**
+     * Each requested calendar is cached by its URL for a couple of minutes to reduce number of HTTP requests.
+     *
+     * @return void
+     */
+    public function testResponsesAreCachedForMultipleRequests()
+    {
+        $events = factory(Event::class, 2)->make();
+        $ical   = view('tests.ical')->with('events', $events)->render();
+        $this->mockHttpResponses([
+            new Response(200, [], $ical),
+            new Response(404, [], 'ical-not-found'), // Will not be returned.
+        ]);
+
+        $importer        = new ICalImporter('valid-ical-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $firstRetrieval  = $importer->get();
+        $secondRetrieval = $importer->get();
+
+        $this->assertTrue(Cache::has('calendar-valid-ical-url'));
+        $this->assertEquals($firstRetrieval, $secondRetrieval);
     }
 }
