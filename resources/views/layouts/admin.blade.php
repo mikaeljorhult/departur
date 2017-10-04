@@ -14,9 +14,11 @@
 
 <body>
     <header>
-        <a class="logo" href="{{ route('admin') }}">
-            {{ config('app.name', 'Departur') }}
-        </a>
+        <p>
+            <a class="logo" href="{{ route('admin') }}">
+                Administration
+            </a>
+        </p>
 
         <nav class="main-navigation">
             <ul>

@@ -20,7 +20,7 @@
             <tbody>
                 @forelse($calendars as $calendar)
                     <tr>
-                        <th scope="row">&nbsp;</th>
+                        <th scope="row"></th>
                         <td><a href="{{ route('calendars.edit', $calendar) }}">{{ $calendar->name }}</a></td>
                         <td>{{ $calendar->start_date->format('Y-m-d') }}</td>
                         <td>{{ $calendar->end_date->format('Y-m-d') }}</td>

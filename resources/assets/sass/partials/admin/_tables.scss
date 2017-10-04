@@ -2,4 +2,8 @@ th {
   font-size: .8em;
   font-weight: inherit;
   text-transform: uppercase;
+
+  &:empty {
+    width: 1rem;
+  }
 }

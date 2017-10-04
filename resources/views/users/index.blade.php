@@ -19,7 +19,7 @@
             <tbody>
                 @forelse($users as $user)
                     <tr>
-                        <th scope="row">&nbsp;</th>
+                        <th scope="row"></th>
                         <td><a href="{{ route('users.edit', $user) }}">{{ $user->email }}</a></td>
                         <td>{{ $user->name }}</td>
                         <td>

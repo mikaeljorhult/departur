@@ -19,7 +19,7 @@
             <tbody>
                 @forelse($schedules as $schedule)
                     <tr>
-                        <th scope="row">&nbsp;</th>
+                        <th scope="row"></th>
                         <td><a href="{{ route('schedules.edit', $schedule) }}">{{ $schedule->name }}</a></td>
                         <td>{{ $schedule->slug }}</td>
                         <td>
