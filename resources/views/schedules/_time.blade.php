@@ -1,6 +1,6 @@
-<ul class="time time-{{ $key }}">
+<ul class="row time time-{{ $key }}">
     @foreach($events as $event)
-        <li class="event">
+        <li class="column event">
             <span class="event-date">
                 {{ $event->start_time->format('H:i') }}
                 - {{ $event->end_time->format('H:i') }}
