@@ -3,8 +3,8 @@
         <li class="column event">
             <span class="event-date">
                 {{ $event->start_time->format('H:i') }}
-                - {{ $event->end_time->format('H:i') }}
-            </span>:
+                - {{ $event->end_time->format('H:i') }}:
+            </span>
 
             <span class="event-title">{{ $event->title }}</span>
 
@@ -13,7 +13,7 @@
             @endif
 
             @if(!empty($event->description))
-                <div class="event-location">{{ $event->description }}</div>
+                <div class="event-description">{!! nl2br(e($event->description)) !!}</div>
             @endif
         </li>
     @endforeach
