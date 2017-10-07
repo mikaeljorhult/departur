@@ -14,7 +14,7 @@
     <div class="column">
         {!! Form::label('calendars', 'Calendars') !!}
         @if(isset($schedule) && $schedule->calendars->count())
-            <ul>
+            <ul class="sortable">
                 @foreach($schedule->calendars as $calendar)
                     <li>
                         {!! Form::hidden('calendars[]', $calendar->id) !!}
