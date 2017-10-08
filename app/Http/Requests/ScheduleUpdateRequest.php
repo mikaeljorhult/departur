@@ -25,8 +25,9 @@ class ScheduleUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'slug' => ['required', 'max:100', Rule::unique('schedules')->ignore($this->route('schedule')->id)],
+            'name'        => ['required'],
+            'slug'        => ['required', 'max:100', Rule::unique('schedules')->ignore($this->route('schedule')->id)],
+            'calendars.*' => [Rule::exists('calendars', 'id')],
         ];
     }
 }

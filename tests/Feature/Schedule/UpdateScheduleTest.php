@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Departur\Calendar;
 use Departur\Schedule;
 use Departur\User;
 use Tests\TestCase;
@@ -164,6 +165,111 @@ class UpdateScheduleTest extends TestCase
         $response->assertRedirect('/schedules');
         $this->assertDatabaseHas('schedules', [
             'slug' => 'test-schedule',
+        ]);
+    }
+
+    /**
+     * Relationships with supplied calendars are created.
+     *
+     * @return void
+     */
+    public function testCalendarRelationshipsAreCreated()
+    {
+        $schedule = factory(Schedule::class)->create();
+        $calendar = factory(Calendar::class)->create();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->put('/schedules/' . $schedule->id, [
+            'name'      => $schedule->name,
+            'slug'      => $schedule->slug,
+            'calendars' => [$calendar->id],
+        ]);
+
+        $response->assertRedirect('/schedules');
+        $this->assertDatabaseHas('calendar_schedule', [
+            'calendar_id' => $calendar->id,
+            'schedule_id' => $schedule->id,
+        ]);
+    }
+
+    /**
+     * Relationships are not created with missing calendars.
+     *
+     * @return void
+     */
+    public function testCalendarMustExist()
+    {
+        $schedule = factory(Schedule::class)->create();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->put('/schedules/' . $schedule->id, [
+            'name'      => $schedule->name,
+            'slug'      => $schedule->slug,
+            'calendars' => [100],
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('calendar_schedule', [
+            'schedule_id' => $schedule->id,
+        ]);
+    }
+
+    /**
+     * Relationships with missing calendars are destroyed.
+     *
+     * @return void
+     */
+    public function testCalendarRelationshipsAreRemoved()
+    {
+        $schedule = factory(Schedule::class)->create();
+        $calendar = factory(Calendar::class)->create();
+        $schedule->calendars()->attach($calendar);
+
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->put('/schedules/' . $schedule->id, [
+            'name' => $schedule->name,
+            'slug' => $schedule->slug,
+        ]);
+
+        $response->assertRedirect('/schedules');
+        $this->assertDatabaseMissing('calendar_schedule', [
+            'calendar_id' => $calendar->id,
+            'schedule_id' => $schedule->id,
+        ]);
+    }
+
+    /**
+     * Relationships with calendars are ordered.
+     *
+     * @return void
+     */
+    public function testCalendarRelationshipsAreOrdered()
+    {
+        $schedule  = factory(Schedule::class)->create();
+        $calendars = factory(Calendar::class, 2)->create();
+        $schedule->calendars()->attach($calendars);
+
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->put('/schedules/' . $schedule->id, [
+            'name'      => $schedule->name,
+            'slug'      => $schedule->slug,
+            'calendars' => $calendars->pluck('id'),
+        ]);
+
+        $response->assertRedirect('/schedules');
+        $this->assertDatabaseHas('calendar_schedule', [
+            'calendar_id' => $calendars[0]->id,
+            'schedule_id' => $schedule->id,
+            'sort_order'  => 0,
+        ]);
+        $this->assertDatabaseHas('calendar_schedule', [
+            'calendar_id' => $calendars[1]->id,
+            'schedule_id' => $schedule->id,
+            'sort_order'  => 1,
         ]);
     }
 }

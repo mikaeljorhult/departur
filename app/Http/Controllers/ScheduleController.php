@@ -6,6 +6,7 @@ use Departur\Http\Requests\ScheduleDestroyRequest;
 use Departur\Http\Requests\ScheduleStoreRequest;
 use Departur\Http\Requests\ScheduleUpdateRequest;
 use Departur\Schedule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class ScheduleController extends Controller
 {
@@ -110,6 +111,8 @@ class ScheduleController extends Controller
     {
         $schedule->update($request->all());
 
+        $this->syncCalendars($request, $schedule);
+
         return redirect('/schedules');
     }
 
@@ -126,5 +129,23 @@ class ScheduleController extends Controller
         $schedule->delete();
 
         return redirect('/schedules');
+    }
+
+    /**
+     * Get calendars from request and sync relationship.
+     *
+     * @param \Illuminate\Foundation\Http\FormRequest $request
+     * @param \Departur\Schedule $schedule
+     */
+    private function syncCalendars(FormRequest $request, Schedule $schedule)
+    {
+        $calendars = collect($request->input('calendars'))
+            ->mapWithKeys(function ($item, $key) {
+                return [
+                    $item => ['sort_order' => $key]
+                ];
+            });;
+
+        $schedule->calendars()->sync($calendars);
     }
 }
