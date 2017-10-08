@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Departur\Calendar;
 use Departur\Schedule;
 use Departur\User;
 use Tests\TestCase;
@@ -43,6 +44,27 @@ class DestroyScheduleTest extends TestCase
         $response->assertRedirect('/login');
         $this->assertDatabaseHas('schedules', [
             'name' => $schedule->name
+        ]);
+    }
+
+    /**
+     * Relationships to calendars are destroyed with schedule.
+     *
+     * @return void
+     */
+    public function testRelationshipsAreDestroyedWithSchedule()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $schedule = factory(Schedule::class)->create();
+        $calendar = factory(Calendar::class)->create();
+        $schedule->calendars()->attach($calendar);
+
+        $response = $this->delete('/schedules/' . $schedule->id);
+
+        $response->assertRedirect('/schedules');
+        $this->assertDatabaseMissing('calendar_schedule', [
+            'calendar_id' => $calendar->id,
         ]);
     }
 }
