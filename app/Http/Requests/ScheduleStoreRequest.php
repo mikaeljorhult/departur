@@ -25,8 +25,9 @@ class ScheduleStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'slug' => ['required', 'max:100', Rule::unique('schedules')],
+            'name'        => ['required'],
+            'slug'        => ['required', 'max:100', Rule::unique('schedules')],
+            'calendars.*' => [Rule::exists('calendars', 'id')],
         ];
     }
 }

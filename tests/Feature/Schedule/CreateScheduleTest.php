@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Departur\Calendar;
 use Departur\Schedule;
 use Departur\User;
 use Tests\TestCase;
@@ -145,6 +146,78 @@ class CreateScheduleTest extends TestCase
         $response->assertRedirect('/schedules');
         $this->assertDatabaseHas('schedules', [
             'slug' => 'test-schedule',
+        ]);
+    }
+
+    /**
+     * Relationships with supplied calendars are created.
+     *
+     * @return void
+     */
+    public function testCalendarRelationshipsAreCreated()
+    {
+        $calendar = factory(Calendar::class)->create();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->post('/schedules', [
+            'name'      => 'Test Schedule',
+            'slug'      => 'test-schedule',
+            'calendars' => [$calendar->id],
+        ]);
+
+        $response->assertRedirect('/schedules');
+        $this->assertDatabaseHas('calendar_schedule', [
+            'calendar_id' => $calendar->id,
+        ]);
+    }
+
+    /**
+     * Relationships with calendars are ordered.
+     *
+     * @return void
+     */
+    public function testCalendarRelationshipsAreOrdered()
+    {
+        $calendars = factory(Calendar::class, 2)->create();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->post('/schedules', [
+            'name'      => 'Test Schedule',
+            'slug'      => 'test-schedule',
+            'calendars' => [$calendars[1]->id, $calendars[0]->id],
+        ]);
+
+        $response->assertRedirect('/schedules');
+        $this->assertDatabaseHas('calendar_schedule', [
+            'calendar_id' => $calendars[1]->id,
+            'sort_order'  => 0,
+        ]);
+        $this->assertDatabaseHas('calendar_schedule', [
+            'calendar_id' => $calendars[0]->id,
+            'sort_order'  => 1,
+        ]);
+    }
+
+    /**
+     * Relationships are not created with missing calendars.
+     *
+     * @return void
+     */
+    public function testCalendarMustExist()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->post('/schedules', [
+            'name'      => 'Test Schedule',
+            'slug'      => 'test-schedule',
+            'calendars' => [100],
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('calendar_schedule', [
+            'calendar_id' => 100,
         ]);
     }
 }

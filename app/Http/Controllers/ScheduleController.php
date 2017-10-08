@@ -52,7 +52,9 @@ class ScheduleController extends Controller
      */
     public function store(ScheduleStoreRequest $request)
     {
-        Schedule::create($request->all());
+        $schedule = Schedule::create($request->all());
+
+        $this->syncCalendars($request, $schedule);
 
         return redirect('/schedules');
     }
