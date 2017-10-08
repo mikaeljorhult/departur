@@ -17,6 +17,7 @@ class CreateCalendarScheduleTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('calendar_id')->index();
             $table->unsignedInteger('schedule_id')->index();
+            $table->unsignedInteger('sort_order')->default(0)->index();
             $table->timestamps();
         });
     }
