@@ -6,6 +6,7 @@ use Departur\Calendar;
 use Departur\Http\Requests\CalendarDestroyRequest;
 use Departur\Http\Requests\CalendarStoreRequest;
 use Departur\Http\Requests\CalendarUpdateRequest;
+use Departur\Schedule;
 use Illuminate\Http\Request;
 
 class CalendarController extends Controller
@@ -40,7 +41,10 @@ class CalendarController extends Controller
      */
     public function create()
     {
-        return view('calendars.create');
+        $schedules = Schedule::orderBy('name')->get();
+
+        return view('calendars.create')
+            ->with('schedules', $schedules);
     }
 
     /**
@@ -79,8 +83,11 @@ class CalendarController extends Controller
      */
     public function edit(Calendar $calendar)
     {
+        $schedules = Schedule::orderBy('name')->get();
+
         return view('calendars.edit')
-            ->with('calendar', $calendar);
+            ->with('calendar', $calendar)
+            ->with('schedules', $schedules);
     }
 
     /**

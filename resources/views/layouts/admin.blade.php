@@ -14,11 +14,9 @@
 
 <body>
     <header>
-        <p>
-            <a class="logo" href="{{ route('admin') }}">
-                Administration
-            </a>
-        </p>
+        <a class="navigation-heading" href="{{ route('admin') }}">
+            Administration
+        </a>
 
         <nav class="main-navigation">
             <ul>
