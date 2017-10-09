@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Departur\Schedule;
 use Departur\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -223,6 +224,84 @@ class CreateCalendarTest extends TestCase
         $response->assertRedirect();
         $this->assertDatabaseMissing('calendars', [
             'name' => 'Test Calendar',
+        ]);
+    }
+
+    /**
+     * Relationships with supplied schedules are created.
+     *
+     * @return void
+     */
+    public function testScheduleRelationshipsAreCreated()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $schedule = factory(Schedule::class)->create();
+
+        $response = $this->post('/calendars', [
+            'name'       => 'Test Calendar',
+            'start_date' => '2017-01-01',
+            'end_date'   => '2017-12-01',
+            'url'        => 'http://example.com/calendar',
+            'schedules'  => [$schedule->id]
+        ]);
+
+        $response->assertRedirect('/calendars');
+        $this->assertDatabaseHas('calendar_schedule', [
+            'schedule_id' => $schedule->id,
+        ]);
+    }
+
+    /**
+     * Relationships with schedules are ordered.
+     *
+     * @return void
+     */
+    public function testScheduleRelationshipsAreOrdered()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $schedules = factory(Schedule::class, 2)->create();
+
+        $response = $this->post('/calendars', [
+            'name'       => 'Test Calendar',
+            'start_date' => '2017-01-01',
+            'end_date'   => '2017-12-01',
+            'url'        => 'http://example.com/calendar',
+            'schedules'  => [$schedules[1]->id, $schedules[0]->id]
+        ]);
+
+        $response->assertRedirect('/calendars');
+        $this->assertDatabaseHas('calendar_schedule', [
+            'schedule_id' => $schedules[1]->id,
+            'sort_order'  => 0,
+        ]);
+        $this->assertDatabaseHas('calendar_schedule', [
+            'schedule_id' => $schedules[0]->id,
+            'sort_order'  => 1,
+        ]);
+    }
+
+    /**
+     * Relationships are not created with missing schedules.
+     *
+     * @return void
+     */
+    public function testScheduleMustExist()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->post('/calendars', [
+            'name'       => 'Test Calendar',
+            'start_date' => '2017-01-01',
+            'end_date'   => '2017-12-01',
+            'url'        => 'http://example.com/calendar',
+            'schedules'  => [100]
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('calendar_schedule', [
+            'schedule_id' => 100,
         ]);
     }
 }

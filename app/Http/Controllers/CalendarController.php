@@ -7,6 +7,7 @@ use Departur\Http\Requests\CalendarDestroyRequest;
 use Departur\Http\Requests\CalendarStoreRequest;
 use Departur\Http\Requests\CalendarUpdateRequest;
 use Departur\Schedule;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
 class CalendarController extends Controller
@@ -56,7 +57,9 @@ class CalendarController extends Controller
      */
     public function store(CalendarStoreRequest $request)
     {
-        Calendar::create($request->all());
+        $calendar = Calendar::create($request->all());
+
+        $this->syncSchedules($request, $calendar);
 
         return redirect('/calendars');
     }
@@ -102,6 +105,8 @@ class CalendarController extends Controller
     {
         $calendar->update($request->all());
 
+        $this->syncSchedules($request, $calendar);
+
         return redirect('/calendars');
     }
 
@@ -118,5 +123,23 @@ class CalendarController extends Controller
         $calendar->delete();
 
         return redirect('/calendars');
+    }
+
+    /**
+     * Get schedules from request and sync relationship.
+     *
+     * @param \Illuminate\Foundation\Http\FormRequest $request
+     * @param \Departur\Calendar $calendar
+     */
+    private function syncSchedules(FormRequest $request, Calendar $calendar)
+    {
+        $schedules = collect($request->input('schedules'))
+            ->mapWithKeys(function ($item, $key) {
+                return [
+                    $item => ['sort_order' => $key]
+                ];
+            });;
+
+        $calendar->schedules()->sync($schedules);
     }
 }
