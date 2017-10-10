@@ -133,13 +133,31 @@ class CalendarController extends Controller
      */
     private function syncSchedules(FormRequest $request, Calendar $calendar)
     {
-        $schedules = collect($request->input('schedules'))
-            ->mapWithKeys(function ($item, $key) {
-                return [
-                    $item => ['sort_order' => $key]
-                ];
-            });;
+        // Remove all schedule relationships if no schedules are provided.
+        if ( ! $request->has('schedules')) {
+            $calendar->schedules()->sync([]);
 
-        $calendar->schedules()->sync($schedules);
+            return;
+        }
+
+        // Get all supplied schedules.
+        $schedules = Schedule::with('calendars')
+                             ->whereIn('id', $request->input('schedules'))
+                             ->get();
+
+        // Go through and reorder all calendars attached to all supplied schedules.
+        $schedules->each(function ($schedule) use ($calendar) {
+            $calendars = $schedule->calendars
+                ->push($calendar)
+                ->pluck('id')
+                ->unique()
+                ->mapWithKeys(function ($item, $key) {
+                    return [
+                        $item => ['sort_order' => $key]
+                    ];
+                });
+
+            $schedule->calendars()->sync($calendars);
+        });
     }
 }

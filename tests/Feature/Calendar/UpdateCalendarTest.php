@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Departur\Calendar;
+use Departur\Schedule;
 use Departur\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -242,6 +243,121 @@ class UpdateCalendarTest extends TestCase
         $response->assertRedirect();
         $this->assertDatabaseHas('calendars', [
             'end_date' => $calendar->end_date,
+        ]);
+    }
+
+    /**
+     * Relationships with supplied schedules are created.
+     *
+     * @return void
+     */
+    public function testScheduleRelationshipsAreCreated()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $calendar = factory(Calendar::class)->create();
+        $schedule = factory(Schedule::class)->create();
+
+        $response = $this->put('/calendars/' . $calendar->id, [
+            'name'       => $calendar->name,
+            'start_date' => $calendar->start_date,
+            'end_date'   => $calendar->end_date,
+            'url'        => $calendar->url,
+            'schedules'  => [$schedule->id]
+        ]);
+
+        $response->assertRedirect('/calendars');
+        $this->assertDatabaseHas('calendar_schedule', [
+            'calendar_id' => $calendar->id,
+            'schedule_id' => $schedule->id,
+        ]);
+    }
+
+    /**
+     * Relationships are not created with missing schedules.
+     *
+     * @return void
+     */
+    public function testScheduleMustExist()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $calendar = factory(Calendar::class)->create();
+
+        $response = $this->put('/calendars/' . $calendar->id, [
+            'name'       => $calendar->name,
+            'start_date' => $calendar->start_date,
+            'end_date'   => $calendar->end_date,
+            'url'        => $calendar->url,
+            'schedules'  => [100]
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('calendar_schedule', [
+            'calendar_id' => $calendar->id,
+        ]);
+    }
+
+    /**
+     * Relationships with missing schedules are destroyed.
+     *
+     * @return void
+     */
+    public function testScheduleRelationshipsAreRemoved()
+    {
+        $calendar = factory(Calendar::class)->create();
+        $schedule = factory(Schedule::class)->create();
+        $calendar->schedules()->attach($schedule);
+
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->put('/calendars/' . $calendar->id, [
+            'name'       => $calendar->name,
+            'start_date' => $calendar->start_date,
+            'end_date'   => $calendar->end_date,
+            'url'        => $calendar->url,
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('calendar_schedule', [
+            'calendar_id' => $calendar->id,
+            'schedule_id' => $schedule->id,
+        ]);
+    }
+
+    /**
+     * Relationships with schedules are ordered.
+     *
+     * @return void
+     */
+    public function testScheduleRelationshipsAreOrdered()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $calendar  = factory(Calendar::class)->create();
+        $schedule1 = factory(Schedule::class)->create();
+        $schedule2 = factory(Schedule::class)->create();
+
+        $schedule1->calendars()->attach(factory(Calendar::class)->create());
+
+        $response = $this->put('/calendars/' . $calendar->id, [
+            'name'       => $calendar->name,
+            'start_date' => $calendar->start_date,
+            'end_date'   => $calendar->end_date,
+            'url'        => $calendar->url,
+            'schedules'  => [$schedule1->id, $schedule2->id]
+        ]);
+
+        $response->assertRedirect('/calendars');
+        $this->assertDatabaseHas('calendar_schedule', [
+            'calendar_id' => $calendar->id,
+            'schedule_id' => $schedule2->id,
+            'sort_order'  => 0
+        ]);
+        $this->assertDatabaseHas('calendar_schedule', [
+            'calendar_id' => $calendar->id,
+            'schedule_id' => $schedule1->id,
+            'sort_order'  => 1
         ]);
     }
 }

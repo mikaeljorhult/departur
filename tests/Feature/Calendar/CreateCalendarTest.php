@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Departur\Calendar;
 use Departur\Schedule;
 use Departur\User;
 use Tests\TestCase;
@@ -262,6 +263,7 @@ class CreateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $schedules = factory(Schedule::class, 2)->create();
+        $schedules[0]->calendars()->attach(factory(Calendar::class)->create());
 
         $response = $this->post('/calendars', [
             'name'       => 'Test Calendar',

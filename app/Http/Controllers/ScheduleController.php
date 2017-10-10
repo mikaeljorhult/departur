@@ -146,7 +146,7 @@ class ScheduleController extends Controller
                 return [
                     $item => ['sort_order' => $key]
                 ];
-            });;
+            });
 
         $schedule->calendars()->sync($calendars);
     }
