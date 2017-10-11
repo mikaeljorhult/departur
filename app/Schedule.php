@@ -23,7 +23,7 @@ class Schedule extends Model
      */
     public function calendars()
     {
-        return $this->belongsToMany(Calendar::class);
+        return $this->belongsToMany(Calendar::class)->orderBy('sort_order');
     }
 
     /**

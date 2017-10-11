@@ -27,7 +27,7 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $schedules = Schedule::all();
+        $schedules = Schedule::orderBy('name')->get();
 
         return view('schedules.index')
             ->with('schedules', $schedules);

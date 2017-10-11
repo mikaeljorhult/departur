@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $schedules = Schedule::active()->get();
+        $schedules = Schedule::active()->orderBy('name')->get();
 
         return view('home')->with('schedules', $schedules);
     }

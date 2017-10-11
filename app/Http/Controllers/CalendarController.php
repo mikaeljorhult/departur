@@ -29,7 +29,7 @@ class CalendarController extends Controller
      */
     public function index()
     {
-        $calendars = Calendar::all();
+        $calendars = Calendar::orderBy('name')->get();
 
         return view('calendars.index')
             ->with('calendars', $calendars);

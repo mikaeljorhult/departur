@@ -18,7 +18,6 @@ class CreateCalendarScheduleTable extends Migration
             $table->unsignedInteger('calendar_id')->index();
             $table->unsignedInteger('schedule_id')->index();
             $table->unsignedInteger('sort_order')->default(0)->index();
-            $table->timestamps();
 
             $table->foreign('calendar_id')->references('id')->on('calendars')->onDelete('cascade');
             $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
