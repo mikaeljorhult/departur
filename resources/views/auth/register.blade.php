@@ -4,8 +4,6 @@
 
 @section('content')
     {!! Form::open(['route' => 'register']) !!}
-        {{ csrf_field() }}
-
         <div class="{{ $errors->has('name') ? ' has-error' : '' }}">
             {!! Form::label('name', 'Name') !!}
             {!! Form::text('name', null, ['required' => true, 'autofocus' => true]) !!}
@@ -45,7 +43,7 @@
         </div>
 
         <div>
-            <input type="submit" value="Register" class="button" />
+            {!! Form::submit('Register', ['class' => 'button']) !!}
         </div>
     {!! Form::close() !!}
 </div>

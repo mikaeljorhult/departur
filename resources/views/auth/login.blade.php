@@ -4,8 +4,6 @@
 
 @section('content')
     {!! Form::open(['route' => 'login']) !!}
-        {{ csrf_field() }}
-
         <div class="{{ $errors->has('email') ? ' has-error' : '' }}">
             {!! Form::label('email', 'E-mail Address') !!}
             {!! Form::email('email', null, ['required' => true, 'autofocus' => true]) !!}
@@ -30,12 +28,12 @@
 
         <div>
             <label>
-                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                {!! Form::checkbox('remember', old('remember') ? 'checked' : '') !!} Remember Me
             </label>
         </div>
 
         <div>
-            <input type="submit" value="Login" class="button" />
+            {!! Form::submit('Login', ['class' => 'button']) !!}
 
             <a class="button button-clear" href="{{ route('password.request') }}">
                 Forgot Your Password?
