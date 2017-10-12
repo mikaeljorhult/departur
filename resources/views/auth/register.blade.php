@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Register')
+
 @section('content')
     {!! Form::open(['route' => 'register']) !!}
         {{ csrf_field() }}

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $schedule->name)
+
 @section('content')
     <h1>{{ $schedule->name }}</h1>
 
