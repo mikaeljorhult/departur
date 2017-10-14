@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <header>
+    <header class="main-header">
         <h1>
             <a href="{{ url('/') }}">
                 {{ config('app.name', 'Departur') }}
@@ -51,7 +51,7 @@
         @yield('content')
     </main>
 
-    <footer>
+    <footer class="main-footer">
         Powered by <a href="http://departur.se">Departur</a>.
     </footer>
 

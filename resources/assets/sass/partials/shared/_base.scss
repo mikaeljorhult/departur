@@ -4,6 +4,14 @@ html {
   background-attachment: fixed;
 }
 
+body {
+  padding: 1rem;
+
+  @media screen and (min-width: 40.0rem) {
+    padding: 1rem 4rem 4rem;
+  }
+}
+
 main {
   background-color: #fdfffe;
 
