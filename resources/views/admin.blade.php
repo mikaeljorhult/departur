@@ -6,17 +6,26 @@
     </header>
 
     <section>
-        <div class="row">
+        <div class="row entrances">
             <div class="column">
-                <a href="{{ route('schedules.index') }}">Schedules</a>
+                <a href="{{ route('schedules.index') }}">
+                    <i class="icon" data-icon="columns"></i>
+                    Schedules
+                </a>
             </div>
 
             <div class="column">
-                <a href="{{ route('calendars.index') }}">Calendars</a>
+                <a href="{{ route('calendars.index') }}">
+                    <i class="icon" data-icon="calendar"></i>
+                    Calendars
+                </a>
             </div>
 
             <div class="column">
-                <a href="{{ route('users.index') }}">Users</a>
+                <a href="{{ route('users.index') }}">
+                    <i class="icon" data-icon="user"></i>
+                    Users
+                </a>
             </div>
         </div>
     </section>
