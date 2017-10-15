@@ -36,30 +36,28 @@ class ICalImporter
     private $endDate;
 
     /**
-     * Constructor.
+     * Get events from calendar.
      *
      * @param string $calendar
      * @param \Carbon\Carbon $startDate
      * @param \Carbon\Carbon $endDate
-     */
-    public function __construct(string $calendar, Carbon $startDate, Carbon $endDate)
-    {
-        $this->calendar  = $calendar;
-        $this->startDate = $startDate;
-        $this->endDate   = $endDate;
-    }
-
-    /**
-     * Get events from calendar.
      *
      * @return \Illuminate\Support\Collection
      */
-    public function get()
+    public function get(string $calendar, Carbon $startDate, Carbon $endDate)
     {
+        // Set variables.
+        $this->calendar  = $calendar;
+        $this->startDate = $startDate;
+        $this->endDate   = $endDate;
+
+        // Retrieve URL.
         $body = $this->request()->getBody();
 
+        // Validate retrieved content.
         $this->validate($body);
 
+        // Return collection of events.
         return $this->parse($body);
     }
 

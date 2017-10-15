@@ -94,10 +94,10 @@ class Calendar extends Model
 
     public function import()
     {
-        $importer = new ICalImporter($this->url, $this->start_date, $this->end_date);
+        $importer = new ICalImporter();
 
         try {
-            $this->events()->saveMany($importer->get());
+            $this->events()->saveMany($importer->get($this->url, $this->start_date, $this->end_date));
         } catch (\Exception $e) {
             dd('ERROR', $e);
         }
