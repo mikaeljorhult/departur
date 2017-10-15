@@ -1,15 +1,10 @@
-h1, h2, h3, h4, h5, h6 {
-  text-transform: uppercase;
-
-  span {
-    font-weight: 100;
-  }
-}
-
-main > header {
-  h1 {
-    margin-bottom: 0;
-    font-size: 3.6rem;
-    line-height: 1;
+main {
+  > header {
+    h1 {
+      margin-bottom: 0;
+      font-size: 3.6rem;
+      line-height: 1;
+      text-transform: uppercase;
+    }
   }
 }
