@@ -10,7 +10,7 @@ use GuzzleHttp\Client;
 use ICal\ICal;
 use Illuminate\Support\Facades\Cache;
 
-class ICalImporter
+class ICalImporter implements Importer
 {
     /**
      * URL to calendar.
