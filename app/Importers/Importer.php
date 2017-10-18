@@ -7,6 +7,20 @@ use Carbon\Carbon;
 interface Importer
 {
     /**
+     * Unique ID of importer.
+     *
+     * @return string
+     */
+    public function id();
+
+    /**
+     * Human-readable name of importer to be displayed to users.
+     *
+     * @return string
+     */
+    public function name();
+
+    /**
      * Get events from calendar.
      *
      * @param string $calendar
