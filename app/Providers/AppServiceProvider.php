@@ -27,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('importers-ical', function () {
+           return new \Departur\Importers\ICalImporter();
+        });
+
+        $this->app->tag('importers-ical', 'importers');
     }
 }
