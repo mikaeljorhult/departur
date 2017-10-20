@@ -31,6 +31,6 @@ class AppServiceProvider extends ServiceProvider
            return new \Departur\Importers\ICalImporter();
         });
 
-        $this->app->tag('importers-ical', 'importers');
+        $this->app->tag(['importers-ical'], 'importers');
     }
 }
