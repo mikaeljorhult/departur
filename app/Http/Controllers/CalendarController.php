@@ -43,9 +43,16 @@ class CalendarController extends Controller
     public function create()
     {
         $schedules = Schedule::orderBy('name')->get();
+        $importers = collect(app()->tagged('importers'))
+            ->mapWithKeys(function ($item) {
+                return [
+                    $item->id() => $item->name()
+                ];
+            });
 
         return view('calendars.create')
-            ->with('schedules', $schedules);
+            ->with('schedules', $schedules)
+            ->with('importers', $importers);
     }
 
     /**
@@ -87,10 +94,17 @@ class CalendarController extends Controller
     public function edit(Calendar $calendar)
     {
         $schedules = Schedule::orderBy('name')->get();
+        $importers = collect(app()->tagged('importers'))
+            ->mapWithKeys(function ($item) {
+                return [
+                    $item->id() => $item->name()
+                ];
+            });
 
         return view('calendars.edit')
             ->with('calendar', $calendar)
-            ->with('schedules', $schedules);
+            ->with('schedules', $schedules)
+            ->with('importers', $importers);
     }
 
     /**

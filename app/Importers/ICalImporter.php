@@ -10,7 +10,7 @@ use GuzzleHttp\Client;
 use ICal\ICal;
 use Illuminate\Support\Facades\Cache;
 
-class ICalImporter
+class ICalImporter implements Importer
 {
     /**
      * URL to calendar.
@@ -34,6 +34,26 @@ class ICalImporter
      * @var \Carbon\Carbon
      */
     private $endDate;
+
+    /**
+     * Unique ID of importer.
+     *
+     * @return string
+     */
+    public function id()
+    {
+        return 'ical';
+    }
+
+    /**
+     * Human-readable name of importer to be displayed to users.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return 'iCal';
+    }
 
     /**
      * Get events from calendar.
