@@ -31,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
            return new \Departur\Importers\ICalImporter();
         });
 
-        $this->app->tag(['importers-ical'], 'importers');
+        $this->app->singleton('importers-webcal', function () {
+            return new \Departur\Importers\WebCalImporter();
+        });
+
+        $this->app->tag(['importers-ical', 'importers-webcal'], 'importers');
     }
 }
