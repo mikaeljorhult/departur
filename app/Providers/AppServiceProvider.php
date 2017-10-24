@@ -27,14 +27,27 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // iCal
         $this->app->singleton('importers-ical', function () {
            return new \Departur\Importers\ICalImporter();
         });
 
+        $this->app->tag('importers-ical', 'importers');
+
+        // WebCal
         $this->app->singleton('importers-webcal', function () {
             return new \Departur\Importers\WebCalImporter();
         });
 
-        $this->app->tag(['importers-ical', 'importers-webcal'], 'importers');
+        $this->app->tag('importers-webcal', 'importers');
+
+        // Google Calendar
+        if (env('GOOGLE_API_KEY') !== null) {
+            $this->app->singleton('importers-google-calendar', function () {
+                return new \Departur\Importers\GoogleCalendarImporter();
+            });
+
+            $this->app->tag('importers-google-calendar', 'importers');
+        }
     }
 }
