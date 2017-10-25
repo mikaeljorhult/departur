@@ -3,6 +3,7 @@
 namespace Departur\Providers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
         if (DB::connection() instanceof \Illuminate\Database\SQLiteConnection) {
             DB::statement(DB::raw('PRAGMA foreign_keys=1'));
         }
+
+        // Bind array of available importers to calendar views.
+        View::composer('calendars._form', 'Departur\Http\ViewComposers\ImporterComposer');
     }
 
     /**
