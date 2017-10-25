@@ -15,22 +15,13 @@
             {!! Form::text('end_date', null, ['placeholder' => 'End Date']) !!}
         </div>
 
-        @if(count($importers) === 1)
-            {!! Form::hidden('type', $importers->keys()[0]) !!}
-        @elseif(count($importers) > 1)
-            <div class="form-group">
-                {!! Form::label('type', 'Calendar Type') !!}
-                {!! Form::select('type', $importers, null) !!}
-            </div>
-        @else
-            <div class="form-group">
-                No importers are available!
-            </div>
-        @endif
-
         <div class="form-group">
             {!! Form::label('url', 'URL') !!}
-            {!! Form::text('url', null, ['placeholder' => 'URL']) !!}
+
+            <div class="form-group-combined">
+                {!! Form::select('type', $importers, null, ['disabled' => count($importers) === 1]) !!}
+                {!! Form::text('url', null, ['placeholder' => 'URL']) !!}
+            </div>
         </div>
     </div>
 
