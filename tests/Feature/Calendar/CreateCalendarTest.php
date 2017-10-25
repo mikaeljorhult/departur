@@ -25,6 +25,7 @@ class CreateCalendarTest extends TestCase
             'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
             'end_date'   => '2017-12-01',
+            'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
         ]);
 
@@ -46,6 +47,7 @@ class CreateCalendarTest extends TestCase
             'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
             'end_date'   => '2017-12-01',
+            'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
         ]);
 
@@ -68,6 +70,7 @@ class CreateCalendarTest extends TestCase
         $response = $this->post('/calendars', [
             'start_date' => '2017-01-01',
             'end_date'   => '2017-12-01',
+            'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
         ]);
 
@@ -90,6 +93,7 @@ class CreateCalendarTest extends TestCase
             'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
             'end_date'   => '2017-12-01',
+            'type'       => 'ical'
         ]);
 
         $response->assertRedirect();
@@ -111,7 +115,54 @@ class CreateCalendarTest extends TestCase
             'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
             'end_date'   => '2017-12-01',
+            'type'       => 'ical',
             'url'        => 'not-a-url',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('calendars', [
+            'name' => 'Test Calendar',
+        ]);
+    }
+
+    /**
+     * Calendars must have a URL.
+     *
+     * @return void
+     */
+    public function testCalendarMustHaveAType()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->post('/calendars', [
+            'name'       => 'Test Calendar',
+            'start_date' => '2017-01-01',
+            'end_date'   => '2017-12-01',
+            'type'       => '',
+            'url'        => 'http://example.com/calendar',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('calendars', [
+            'name' => 'Test Calendar',
+        ]);
+    }
+
+    /**
+     * Calendar URL must be valid.
+     *
+     * @return void
+     */
+    public function testTypeMustBeValid()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->post('/calendars', [
+            'name'       => 'Test Calendar',
+            'start_date' => '2017-01-01',
+            'end_date'   => '2017-12-01',
+            'type'       => 'not-valid-type',
+            'url'        => 'http://example.com/calendar',
         ]);
 
         $response->assertRedirect();
@@ -132,6 +183,7 @@ class CreateCalendarTest extends TestCase
         $response = $this->post('/calendars', [
             'name'     => 'Test Calendar',
             'end_date' => '2017-12-01',
+            'type'       => 'ical',
             'url'      => 'http://example.com/calendar',
         ]);
 
@@ -154,6 +206,7 @@ class CreateCalendarTest extends TestCase
             'name'       => 'Test Calendar',
             'start_date' => 'not-a-date',
             'end_date'   => '2017-12-01',
+            'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
         ]);
 
@@ -175,6 +228,7 @@ class CreateCalendarTest extends TestCase
         $response = $this->post('/calendars', [
             'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
+            'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
         ]);
 
@@ -197,6 +251,7 @@ class CreateCalendarTest extends TestCase
             'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
             'end_date'   => 'not-a-date',
+            'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
         ]);
 
@@ -219,6 +274,7 @@ class CreateCalendarTest extends TestCase
             'name'       => 'Test Calendar',
             'start_date' => '2017-12-01',
             'end_date'   => '2017-01-01',
+            'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
         ]);
 
@@ -243,6 +299,7 @@ class CreateCalendarTest extends TestCase
             'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
             'end_date'   => '2017-12-01',
+            'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
             'schedules'  => [$schedule->id]
         ]);
@@ -269,6 +326,7 @@ class CreateCalendarTest extends TestCase
             'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
             'end_date'   => '2017-12-01',
+            'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
             'schedules'  => [$schedules[1]->id, $schedules[0]->id]
         ]);
@@ -297,6 +355,7 @@ class CreateCalendarTest extends TestCase
             'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
             'end_date'   => '2017-12-01',
+            'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
             'schedules'  => [100]
         ]);

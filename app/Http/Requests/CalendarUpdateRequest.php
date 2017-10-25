@@ -24,11 +24,15 @@ class CalendarUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $importerComposer = app(\Departur\Http\ViewComposers\ImporterComposer::class);
+        $importers = $importerComposer->importers()->keys()->toArray();
+
         return [
             'name'        => ['required'],
             'start_date'  => ['required', 'date'],
             'end_date'    => ['required', 'date', 'after:start_date'],
             'url'         => ['required', 'url'],
+            'type'        => ['required', Rule::in($importers)],
             'schedules.*' => [Rule::exists('schedules', 'id')],
         ];
     }
