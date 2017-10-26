@@ -20,6 +20,7 @@ class Calendar extends Model
         'name',
         'start_date',
         'end_date',
+        'type',
         'url',
     ];
 

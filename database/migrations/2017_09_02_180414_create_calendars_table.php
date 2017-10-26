@@ -18,6 +18,7 @@ class CreateCalendarsTable extends Migration
             $table->string('name');
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('type');
             $table->string('url');
             $table->timestamps();
         });
