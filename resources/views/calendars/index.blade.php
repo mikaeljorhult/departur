@@ -13,6 +13,7 @@
                     <th>Name</th>
                     <th>Start Date</th>
                     <th>End Date</th>
+                    <th>URL</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -24,6 +25,7 @@
                         <td><a href="{{ route('calendars.edit', $calendar) }}">{{ $calendar->name }}</a></td>
                         <td>{{ $calendar->start_date->format('Y-m-d') }}</td>
                         <td>{{ $calendar->end_date->format('Y-m-d') }}</td>
+                        <td><i class="icon calendar-url" data-icon="calendar" title="{{ $calendar->url }}"></i></td>
                         <td>
                             <a href="{{ route('calendars.destroy', $calendar) }}">D</a>
                         </td>
