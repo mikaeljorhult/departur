@@ -1,0 +1,18 @@
+@media screen and (min-width: 68.0rem) {
+  .form-group-combined {
+    display: flex;
+
+    select {
+      flex: 0 0 16rem;
+      background-color: rgba(#9b4dca, .1);
+      border-right-width: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    input {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
