@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Importers;
 
-use Carbon\Carbon;
 use Departur\Event;
 use Departur\Importers\ICalImporter;
 use GuzzleHttp\Psr7\Response;
@@ -38,7 +37,7 @@ class ICalImporterTest extends TestCase
         $this->mockHttpResponses([new Response(200, [], $ical)]);
 
         $importer       = new ICalImporter();
-        $returnedEvents = $importer->get('valid-ical-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $returnedEvents = $importer->get('valid-ical-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(2, $returnedEvents);
@@ -61,7 +60,7 @@ class ICalImporterTest extends TestCase
         $this->mockHttpResponses([new Response(200, [], $ical)]);
 
         $importer       = new ICalImporter();
-        $returnedEvents = $importer->get('valid-ical-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $returnedEvents = $importer->get('valid-ical-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(0, $returnedEvents);
@@ -78,7 +77,7 @@ class ICalImporterTest extends TestCase
         $this->mockHttpResponses([new Response(200, [], 'invalid-ical')]);
 
         $importer = new ICalImporter();
-        $importer->get('valid-ical-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $importer->get('valid-ical-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -90,7 +89,7 @@ class ICalImporterTest extends TestCase
     public function testErrorIsThrownIfURLIsInvalid()
     {
         $importer = new ICalImporter();
-        $importer->get('invalid-ical-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $importer->get('invalid-ical-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -104,7 +103,7 @@ class ICalImporterTest extends TestCase
         $this->mockHttpResponses([new Response(404, [], 'ical-not-found')]);
 
         $importer = new ICalImporter();
-        $importer->get('ical-not-found-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $importer->get('ical-not-found-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -122,8 +121,8 @@ class ICalImporterTest extends TestCase
         ]);
 
         $importer        = new ICalImporter();
-        $firstRetrieval  = $importer->get('valid-ical-url', Carbon::now()->subYear(), Carbon::now()->addYear());
-        $secondRetrieval = $importer->get('valid-ical-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $firstRetrieval  = $importer->get('valid-ical-url', now()->subYear(), now()->addYear());
+        $secondRetrieval = $importer->get('valid-ical-url', now()->subYear(), now()->addYear());
 
         $this->assertTrue(Cache::has('calendar-valid-ical-url'));
         $this->assertEquals($firstRetrieval, $secondRetrieval);

@@ -2,7 +2,6 @@
 
 namespace Departur;
 
-use Carbon\Carbon;
 use Collective\Html\Eloquent\FormAccessible;
 use Departur\Importers\ICalImporter;
 use Illuminate\Database\Eloquent\Model;
@@ -87,7 +86,7 @@ class Calendar extends Model
      */
     public function scopeActive($query)
     {
-        $today = Carbon::today();
+        $today = today();
 
         return $query->where('start_date', '<=', $today)
                      ->where('end_date', '>=', $today);

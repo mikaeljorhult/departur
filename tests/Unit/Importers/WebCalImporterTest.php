@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Importers;
 
-use Carbon\Carbon;
 use Departur\Event;
 use Departur\Importers\WebCalImporter;
 use GuzzleHttp\Psr7\Response;
@@ -38,7 +37,7 @@ class WebCalImporterTest extends TestCase
         $this->mockHttpResponses([new Response(200, [], $webcal)]);
 
         $importer       = new WebCalImporter();
-        $returnedEvents = $importer->get('valid-webcal-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $returnedEvents = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(2, $returnedEvents);
@@ -61,7 +60,7 @@ class WebCalImporterTest extends TestCase
         $this->mockHttpResponses([new Response(200, [], $webcal)]);
 
         $importer       = new WebCalImporter();
-        $returnedEvents = $importer->get('valid-webcal-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $returnedEvents = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(0, $returnedEvents);
@@ -78,7 +77,7 @@ class WebCalImporterTest extends TestCase
         $this->mockHttpResponses([new Response(200, [], 'invalid-webcal')]);
 
         $importer = new WebCalImporter();
-        $importer->get('valid-webcal-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -90,7 +89,7 @@ class WebCalImporterTest extends TestCase
     public function testErrorIsThrownIfURLIsInvalid()
     {
         $importer = new WebCalImporter();
-        $importer->get('invalid-webcal-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $importer->get('invalid-webcal-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -104,7 +103,7 @@ class WebCalImporterTest extends TestCase
         $this->mockHttpResponses([new Response(404, [], 'webcal-not-found')]);
 
         $importer = new WebCalImporter();
-        $importer->get('webcal-not-found-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $importer->get('webcal-not-found-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -122,8 +121,8 @@ class WebCalImporterTest extends TestCase
         ]);
 
         $importer        = new WebCalImporter();
-        $firstRetrieval  = $importer->get('valid-webcal-url', Carbon::now()->subYear(), Carbon::now()->addYear());
-        $secondRetrieval = $importer->get('valid-webcal-url', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $firstRetrieval  = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
+        $secondRetrieval = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
 
         $this->assertTrue(Cache::has('calendar-valid-webcal-url'));
         $this->assertEquals($firstRetrieval, $secondRetrieval);
@@ -143,7 +142,7 @@ class WebCalImporterTest extends TestCase
         ]);
 
         $importer = new WebCalImporter();
-        $importer->get('webcal://localhost/calendar', Carbon::now()->subYear(), Carbon::now()->addYear());
+        $importer->get('webcal://localhost/calendar', now()->subYear(), now()->addYear());
 
         $this->assertTrue(Cache::has('calendar-http://localhost/calendar'));
     }
