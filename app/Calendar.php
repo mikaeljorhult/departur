@@ -94,8 +94,10 @@ class Calendar extends Model
 
     public function import()
     {
-        $importer = new ICalImporter();
+        // Get importer for type of calendar.
+        $importer = app('importers-' . $this->type);
 
+        // Retrieve and store events from calendar.
         try {
             $this->events()->saveMany($importer->get($this->url, $this->start_date, $this->end_date));
         } catch (\Exception $e) {
