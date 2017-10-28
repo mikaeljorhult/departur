@@ -6,6 +6,7 @@ use Departur\Calendar;
 use Departur\Http\Requests\CalendarDestroyRequest;
 use Departur\Http\Requests\CalendarStoreRequest;
 use Departur\Http\Requests\CalendarUpdateRequest;
+use Departur\Jobs\ImportCalendar;
 use Departur\Schedule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -61,6 +62,8 @@ class CalendarController extends Controller
 
         $this->syncSchedules($request, $calendar);
 
+        dispatch(new ImportCalendar($calendar));
+
         return redirect('/calendars');
     }
 
@@ -106,6 +109,8 @@ class CalendarController extends Controller
         $calendar->update($request->all());
 
         $this->syncSchedules($request, $calendar);
+
+        dispatch(new ImportCalendar($calendar));
 
         return redirect('/calendars');
     }
