@@ -3,14 +3,27 @@
 namespace Tests\Feature;
 
 use Departur\Calendar;
+use Departur\Jobs\ImportCalendar;
 use Departur\Schedule;
 use Departur\User;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateCalendarTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * Fake Queue facade for all test to avoid running any dispatched jobs.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        Queue::fake();
+    }
 
     /**
      * A user can create a calendar.
@@ -34,6 +47,7 @@ class CreateCalendarTest extends TestCase
             'name' => 'Test Calendar',
             'url'  => 'http://example.com/calendar',
         ]);
+        Queue::assertPushed(ImportCalendar::class);
     }
 
     /**
@@ -56,6 +70,7 @@ class CreateCalendarTest extends TestCase
             'name' => 'Test Calendar',
             'url'  => 'http://example.com/calendar',
         ]);
+        Queue::assertNotPushed(ImportCalendar::class);
     }
 
     /**

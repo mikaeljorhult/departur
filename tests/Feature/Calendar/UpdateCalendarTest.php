@@ -3,14 +3,27 @@
 namespace Tests\Feature;
 
 use Departur\Calendar;
+use Departur\Jobs\ImportCalendar;
 use Departur\Schedule;
 use Departur\User;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UpdateCalendarTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * Fake Queue facade for all test to avoid running any dispatched jobs.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        Queue::fake();
+    }
 
     /**
      * A user can update a calendar.
@@ -37,6 +50,9 @@ class UpdateCalendarTest extends TestCase
         $this->assertDatabaseHas('calendars', [
             'name' => 'Updated Calendar',
         ]);
+        Queue::assertPushed(ImportCalendar::class, function($job) use ($calendar) {
+            return $job->calendar->id === $calendar->id;
+        });
     }
 
     /**
@@ -62,6 +78,7 @@ class UpdateCalendarTest extends TestCase
         $this->assertDatabaseMissing('calendars', [
             'name' => 'Updated Calendar',
         ]);
+        Queue::assertNotPushed(ImportCalendar::class);
     }
 
     /**

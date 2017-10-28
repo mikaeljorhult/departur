@@ -98,10 +98,6 @@ class Calendar extends Model
         $importer = app('importers-' . $this->type);
 
         // Retrieve and store events from calendar.
-        try {
-            $this->events()->saveMany($importer->get($this->url, $this->start_date, $this->end_date));
-        } catch (\Exception $e) {
-            dd('ERROR', $e);
-        }
+        $this->events()->saveMany($importer->get($this->url, $this->start_date, $this->end_date));
     }
 }
