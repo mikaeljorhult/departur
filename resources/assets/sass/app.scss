@@ -1,11 +1,9 @@
 @import '../../../node_modules/normalize.css/normalize.css';
 @import '../../../node_modules/milligram/src/milligram.sass';
-
 // Shared styles.
 @import './partials/shared/base';
 @import './partials/shared/header';
 @import './partials/shared/footer';
-
 // Partials.
 @import './partials/app/layout';
 @import './partials/app/event';

@@ -198,7 +198,7 @@ class CreateCalendarTest extends TestCase
         $response = $this->post('/calendars', [
             'name'     => 'Test Calendar',
             'end_date' => '2017-12-01',
-            'type'       => 'ical',
+            'type'     => 'ical',
             'url'      => 'http://example.com/calendar',
         ]);
 

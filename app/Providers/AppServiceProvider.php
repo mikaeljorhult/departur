@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // iCal
         $this->app->singleton('importers-ical', function () {
-           return new \Departur\Importers\ICalImporter();
+            return new \Departur\Importers\ICalImporter();
         });
 
         $this->app->tag('importers-ical', 'importers');

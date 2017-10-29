@@ -35,7 +35,7 @@ class ImportCalendarsTest extends TestCase
 
         Artisan::call('departur:import');
 
-        Queue::assertPushed(ImportCalendar::class, function($job) use ($calendar) {
+        Queue::assertPushed(ImportCalendar::class, function ($job) use ($calendar) {
             return $job->calendar->id === $calendar->id;
         });
     }

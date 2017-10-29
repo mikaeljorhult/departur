@@ -50,7 +50,7 @@ class UpdateCalendarTest extends TestCase
         $this->assertDatabaseHas('calendars', [
             'name' => 'Updated Calendar',
         ]);
-        Queue::assertPushed(ImportCalendar::class, function($job) use ($calendar) {
+        Queue::assertPushed(ImportCalendar::class, function ($job) use ($calendar) {
             return $job->calendar->id === $calendar->id;
         });
     }
