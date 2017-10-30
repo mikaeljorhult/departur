@@ -9,7 +9,6 @@ use Departur\Http\Requests\CalendarUpdateRequest;
 use Departur\Jobs\ImportCalendar;
 use Departur\Schedule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
 class CalendarController extends Controller
 {
