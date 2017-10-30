@@ -2,10 +2,10 @@
 
 namespace Departur\Http\Controllers\Auth;
 
-use Departur\User;
 use Departur\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use Departur\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -42,7 +42,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return \Illuminate\Contracts\Validation\Validator
      */
@@ -58,7 +58,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return \Departur\User
      */

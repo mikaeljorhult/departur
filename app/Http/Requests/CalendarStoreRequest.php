@@ -25,7 +25,7 @@ class CalendarStoreRequest extends FormRequest
     public function rules()
     {
         $importerComposer = app(\Departur\Http\ViewComposers\ImporterComposer::class);
-        $importers        = $importerComposer->importers()->keys()->toArray();
+        $importers = $importerComposer->importers()->keys()->toArray();
 
         return [
             'name'        => ['required'],

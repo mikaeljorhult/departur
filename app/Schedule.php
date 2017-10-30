@@ -13,7 +13,7 @@ class Schedule extends Model
      */
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
     ];
 
     /**

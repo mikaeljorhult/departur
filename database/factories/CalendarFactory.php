@@ -6,7 +6,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Calendar::class, function (Faker $faker) {
     $startDate = Carbon::instance($faker->dateTimeBetween('-1 year', '+1 year'));
-    $endDate   = $startDate->copy()->addWeeks(rand(1, 26));
+    $endDate = $startDate->copy()->addWeeks(rand(1, 26));
 
     return [
         'name'       => $faker->words(4, true),

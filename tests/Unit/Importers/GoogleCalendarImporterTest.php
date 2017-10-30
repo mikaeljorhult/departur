@@ -5,9 +5,9 @@ namespace Tests\Unit\Importers;
 use Departur\Event;
 use Departur\Importers\GoogleCalendarImporter;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class GoogleCalendarImporterTest extends TestCase
 {
@@ -31,11 +31,11 @@ class GoogleCalendarImporterTest extends TestCase
      */
     public function testEventsFromValidCalendarAreReturned()
     {
-        $events    = factory(Event::class, 2)->make()->sortBy('start_time');
+        $events = factory(Event::class, 2)->make()->sortBy('start_time');
         $googleCal = view('tests.google')->with('events', $events)->render();
         $this->mockHttpResponses([new Response(200, [], $googleCal)]);
 
-        $importer       = new GoogleCalendarImporter();
+        $importer = new GoogleCalendarImporter();
         $returnedEvents = $importer->get('valid-google-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
@@ -58,7 +58,7 @@ class GoogleCalendarImporterTest extends TestCase
         $googleCal = view('tests.google')->render();
         $this->mockHttpResponses([new Response(200, [], $googleCal)]);
 
-        $importer       = new GoogleCalendarImporter();
+        $importer = new GoogleCalendarImporter();
         $returnedEvents = $importer->get('valid-google-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
@@ -69,6 +69,7 @@ class GoogleCalendarImporterTest extends TestCase
      * Get method throws an error if Google Calendar is invalid.
      *
      * @expectedException \Departur\Exceptions\InvalidCalendarException
+     *
      * @return void
      */
     public function testErrorIsThrownIfCalendarIsInvalid()
@@ -83,6 +84,7 @@ class GoogleCalendarImporterTest extends TestCase
      * Get method throws an error if URL is invalid.
      *
      * @expectedException \Departur\Exceptions\UnreachableCalendarException
+     *
      * @return void
      */
     public function testErrorIsThrownIfURLIsInvalid()
@@ -95,6 +97,7 @@ class GoogleCalendarImporterTest extends TestCase
      * Get method throws an error if URL is not found.
      *
      * @expectedException \Departur\Exceptions\UnreachableCalendarException
+     *
      * @return void
      */
     public function testErrorIsThrownIfURLNotFound()
@@ -112,15 +115,15 @@ class GoogleCalendarImporterTest extends TestCase
      */
     public function testResponsesAreCachedForMultipleRequests()
     {
-        $events    = factory(Event::class, 2)->make();
+        $events = factory(Event::class, 2)->make();
         $googleCal = view('tests.google')->with('events', $events)->render();
         $this->mockHttpResponses([
             new Response(200, [], $googleCal),
             new Response(404, [], view('tests.google-404')->render()), // Will not be returned.
         ]);
 
-        $importer        = new GoogleCalendarImporter();
-        $firstRetrieval  = $importer->get('valid-google-url', now()->subYear(), now()->addYear());
+        $importer = new GoogleCalendarImporter();
+        $firstRetrieval = $importer->get('valid-google-url', now()->subYear(), now()->addYear());
         $secondRetrieval = $importer->get('valid-google-url', now()->subYear(), now()->addYear());
 
         $this->assertEquals($firstRetrieval, $secondRetrieval);

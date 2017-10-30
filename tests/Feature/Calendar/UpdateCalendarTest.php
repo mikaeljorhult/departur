@@ -6,9 +6,9 @@ use Departur\Calendar;
 use Departur\Jobs\ImportCalendar;
 use Departur\Schedule;
 use Departur\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UpdateCalendarTest extends TestCase
 {
@@ -38,7 +38,7 @@ class UpdateCalendarTest extends TestCase
             'name' => 'Test Calendar',
         ]);
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => 'Updated Calendar',
             'start_date' => $calendar->start_date,
             'end_date'   => $calendar->end_date,
@@ -66,7 +66,7 @@ class UpdateCalendarTest extends TestCase
             'name' => 'Test Calendar',
         ]);
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => 'Updated Calendar',
             'start_date' => $calendar->start_date,
             'end_date'   => $calendar->end_date,
@@ -91,7 +91,7 @@ class UpdateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $calendar = factory(Calendar::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => '',
             'start_date' => $calendar->start_date,
             'end_date'   => $calendar->end_date,
@@ -115,7 +115,7 @@ class UpdateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $calendar = factory(Calendar::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => $calendar->start_date,
             'end_date'   => $calendar->end_date,
@@ -139,7 +139,7 @@ class UpdateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $calendar = factory(Calendar::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => $calendar->start_date,
             'end_date'   => $calendar->end_date,
@@ -163,7 +163,7 @@ class UpdateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $calendar = factory(Calendar::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => $calendar->start_date,
             'end_date'   => $calendar->end_date,
@@ -186,7 +186,7 @@ class UpdateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $calendar = factory(Calendar::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => $calendar->start_date,
             'end_date'   => $calendar->end_date,
@@ -210,7 +210,7 @@ class UpdateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $calendar = factory(Calendar::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => '',
             'end_date'   => $calendar->end_date,
@@ -234,7 +234,7 @@ class UpdateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $calendar = factory(Calendar::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => 'not-a-valid-date',
             'end_date'   => $calendar->end_date,
@@ -258,7 +258,7 @@ class UpdateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $calendar = factory(Calendar::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => $calendar->start_date,
             'end_date'   => '',
@@ -282,7 +282,7 @@ class UpdateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $calendar = factory(Calendar::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => $calendar->start_date,
             'end_date'   => 'not-a-valid-date',
@@ -306,7 +306,7 @@ class UpdateCalendarTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $calendar = factory(Calendar::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => '2017-12-01',
             'end_date'   => '2017-01-01',
@@ -332,13 +332,13 @@ class UpdateCalendarTest extends TestCase
         $calendar = factory(Calendar::class)->create();
         $schedule = factory(Schedule::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => $calendar->start_date,
             'end_date'   => $calendar->end_date,
             'type'       => 'ical',
             'url'        => $calendar->url,
-            'schedules'  => [$schedule->id]
+            'schedules'  => [$schedule->id],
         ]);
 
         $response->assertRedirect('/calendars');
@@ -359,13 +359,13 @@ class UpdateCalendarTest extends TestCase
 
         $calendar = factory(Calendar::class)->create();
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => $calendar->start_date,
             'end_date'   => $calendar->end_date,
             'type'       => 'ical',
             'url'        => $calendar->url,
-            'schedules'  => [100]
+            'schedules'  => [100],
         ]);
 
         $response->assertRedirect();
@@ -387,7 +387,7 @@ class UpdateCalendarTest extends TestCase
 
         $this->actingAs(factory(User::class)->create());
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => $calendar->start_date,
             'end_date'   => $calendar->end_date,
@@ -411,31 +411,31 @@ class UpdateCalendarTest extends TestCase
     {
         $this->actingAs(factory(User::class)->create());
 
-        $calendar  = factory(Calendar::class)->create();
+        $calendar = factory(Calendar::class)->create();
         $schedule1 = factory(Schedule::class)->create();
         $schedule2 = factory(Schedule::class)->create();
 
         $schedule1->calendars()->attach(factory(Calendar::class)->create());
 
-        $response = $this->put('/calendars/' . $calendar->id, [
+        $response = $this->put('/calendars/'.$calendar->id, [
             'name'       => $calendar->name,
             'start_date' => $calendar->start_date,
             'end_date'   => $calendar->end_date,
             'type'       => 'ical',
             'url'        => $calendar->url,
-            'schedules'  => [$schedule1->id, $schedule2->id]
+            'schedules'  => [$schedule1->id, $schedule2->id],
         ]);
 
         $response->assertRedirect('/calendars');
         $this->assertDatabaseHas('calendar_schedule', [
             'calendar_id' => $calendar->id,
             'schedule_id' => $schedule2->id,
-            'sort_order'  => 0
+            'sort_order'  => 0,
         ]);
         $this->assertDatabaseHas('calendar_schedule', [
             'calendar_id' => $calendar->id,
             'schedule_id' => $schedule1->id,
-            'sort_order'  => 1
+            'sort_order'  => 1,
         ]);
     }
 }

@@ -6,9 +6,9 @@ use Departur\Calendar;
 use Departur\Jobs\ImportCalendar;
 use Departur\Schedule;
 use Departur\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateCalendarTest extends TestCase
 {
@@ -108,7 +108,7 @@ class CreateCalendarTest extends TestCase
             'name'       => 'Test Calendar',
             'start_date' => '2017-01-01',
             'end_date'   => '2017-12-01',
-            'type'       => 'ical'
+            'type'       => 'ical',
         ]);
 
         $response->assertRedirect();
@@ -316,7 +316,7 @@ class CreateCalendarTest extends TestCase
             'end_date'   => '2017-12-01',
             'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
-            'schedules'  => [$schedule->id]
+            'schedules'  => [$schedule->id],
         ]);
 
         $response->assertRedirect('/calendars');
@@ -343,7 +343,7 @@ class CreateCalendarTest extends TestCase
             'end_date'   => '2017-12-01',
             'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
-            'schedules'  => [$schedules[1]->id, $schedules[0]->id]
+            'schedules'  => [$schedules[1]->id, $schedules[0]->id],
         ]);
 
         $response->assertRedirect('/calendars');
@@ -372,7 +372,7 @@ class CreateCalendarTest extends TestCase
             'end_date'   => '2017-12-01',
             'type'       => 'ical',
             'url'        => 'http://example.com/calendar',
-            'schedules'  => [100]
+            'schedules'  => [100],
         ]);
 
         $response->assertRedirect();

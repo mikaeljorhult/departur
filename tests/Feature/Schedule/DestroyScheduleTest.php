@@ -5,8 +5,8 @@ namespace Tests\Feature;
 use Departur\Calendar;
 use Departur\Schedule;
 use Departur\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DestroyScheduleTest extends TestCase
 {
@@ -22,11 +22,11 @@ class DestroyScheduleTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $schedule = factory(Schedule::class)->create();
 
-        $response = $this->delete('/schedules/' . $schedule->id);
+        $response = $this->delete('/schedules/'.$schedule->id);
 
         $response->assertRedirect('/schedules');
         $this->assertDatabaseMissing('schedules', [
-            'name' => $schedule->name
+            'name' => $schedule->name,
         ]);
     }
 
@@ -39,11 +39,11 @@ class DestroyScheduleTest extends TestCase
     {
         $schedule = factory(Schedule::class)->create();
 
-        $response = $this->delete('/schedules/' . $schedule->id);
+        $response = $this->delete('/schedules/'.$schedule->id);
 
         $response->assertRedirect('/login');
         $this->assertDatabaseHas('schedules', [
-            'name' => $schedule->name
+            'name' => $schedule->name,
         ]);
     }
 
@@ -60,7 +60,7 @@ class DestroyScheduleTest extends TestCase
         $calendar = factory(Calendar::class)->create();
         $schedule->calendars()->attach($calendar);
 
-        $response = $this->delete('/schedules/' . $schedule->id);
+        $response = $this->delete('/schedules/'.$schedule->id);
 
         $response->assertRedirect('/schedules');
         $this->assertDatabaseMissing('calendar_schedule', [

@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use Departur\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DestroyUserTest extends TestCase
 {
@@ -20,11 +20,11 @@ class DestroyUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $user = factory(User::class)->create();
 
-        $response = $this->delete('/users/' . $user->id);
+        $response = $this->delete('/users/'.$user->id);
 
         $response->assertRedirect('/users');
         $this->assertDatabaseMissing('users', [
-            'name' => $user->name
+            'name' => $user->name,
         ]);
     }
 
@@ -37,11 +37,11 @@ class DestroyUserTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $response = $this->delete('/users/' . $user->id);
+        $response = $this->delete('/users/'.$user->id);
 
         $response->assertRedirect('/login');
         $this->assertDatabaseHas('users', [
-            'name' => $user->name
+            'name' => $user->name,
         ]);
     }
 
@@ -55,11 +55,11 @@ class DestroyUserTest extends TestCase
         $user = factory(User::class)->create();
         $this->actingAs($user);
 
-        $response = $this->delete('/users/' . $user->id);
+        $response = $this->delete('/users/'.$user->id);
 
         $response->assertStatus(403);
         $this->assertDatabaseHas('users', [
-            'name' => $user->name
+            'name' => $user->name,
         ]);
     }
 }

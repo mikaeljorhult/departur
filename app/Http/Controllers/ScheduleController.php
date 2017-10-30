@@ -62,7 +62,7 @@ class ScheduleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Departur\Schedule $schedule
+     * @param \Departur\Schedule $schedule
      *
      * @return \Illuminate\Http\Response
      */
@@ -77,7 +77,7 @@ class ScheduleController extends Controller
     /**
      * Display the specified resource via slug.
      *
-     * @param  string $slug
+     * @param string $slug
      *
      * @return \Illuminate\Http\Response
      */
@@ -91,7 +91,7 @@ class ScheduleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Departur\Schedule $schedule
+     * @param \Departur\Schedule $schedule
      *
      * @return \Illuminate\Http\Response
      */
@@ -105,7 +105,7 @@ class ScheduleController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Departur\Http\Requests\ScheduleUpdateRequest $request
-     * @param \Departur\Schedule $schedule
+     * @param \Departur\Schedule                            $schedule
      *
      * @return \Illuminate\Http\Response
      */
@@ -121,7 +121,7 @@ class ScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Departur\Schedule $schedule
+     * @param \Departur\Schedule                             $schedule
      * @param \Departur\Http\Requests\ScheduleDestroyRequest $request
      *
      * @return \Illuminate\Http\Response
@@ -137,14 +137,14 @@ class ScheduleController extends Controller
      * Get calendars from request and sync relationship.
      *
      * @param \Illuminate\Foundation\Http\FormRequest $request
-     * @param \Departur\Schedule $schedule
+     * @param \Departur\Schedule                      $schedule
      */
     private function syncCalendars(FormRequest $request, Schedule $schedule)
     {
         $calendars = collect($request->input('calendars'))
             ->mapWithKeys(function ($item, $key) {
                 return [
-                    $item => ['sort_order' => $key]
+                    $item => ['sort_order' => $key],
                 ];
             });
 

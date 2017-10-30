@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use Departur\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class CreateUserTest extends TestCase
 {

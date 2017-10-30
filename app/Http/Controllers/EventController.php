@@ -30,7 +30,7 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -42,7 +42,7 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Departur\Event $event
+     * @param \Departur\Event $event
      *
      * @return \Illuminate\Http\Response
      */
@@ -54,7 +54,7 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Departur\Event $event
+     * @param \Departur\Event $event
      *
      * @return \Illuminate\Http\Response
      */
@@ -66,8 +66,8 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Departur\Event $event
+     * @param \Illuminate\Http\Request $request
+     * @param \Departur\Event          $event
      *
      * @return \Illuminate\Http\Response
      */
@@ -79,7 +79,7 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Departur\Event $event
+     * @param \Departur\Event $event
      *
      * @return \Illuminate\Http\Response
      */

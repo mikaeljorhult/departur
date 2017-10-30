@@ -5,8 +5,8 @@ namespace Tests\Feature;
 use Departur\Calendar;
 use Departur\Schedule;
 use Departur\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UpdateScheduleTest extends TestCase
 {
@@ -25,7 +25,7 @@ class UpdateScheduleTest extends TestCase
 
         $this->actingAs(factory(User::class)->create());
 
-        $response = $this->put('/schedules/' . $schedule->id, [
+        $response = $this->put('/schedules/'.$schedule->id, [
             'name' => 'Updated Schedule',
             'slug' => $schedule->slug,
         ]);
@@ -47,7 +47,7 @@ class UpdateScheduleTest extends TestCase
             'name' => 'Test Schedule',
         ]);
 
-        $response = $this->put('/schedules/' . $schedule->id, [
+        $response = $this->put('/schedules/'.$schedule->id, [
             'name' => 'Updated Schedule',
             'slug' => $schedule->slug,
         ]);
@@ -68,7 +68,7 @@ class UpdateScheduleTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $schedule = factory(Schedule::class)->create();
 
-        $response = $this->put('/schedules/' . $schedule->id, [
+        $response = $this->put('/schedules/'.$schedule->id, [
             'name' => '',
             'slug' => $schedule->slug,
         ]);
@@ -89,7 +89,7 @@ class UpdateScheduleTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $schedule = factory(Schedule::class)->create();
 
-        $response = $this->put('/schedules/' . $schedule->id, [
+        $response = $this->put('/schedules/'.$schedule->id, [
             'name' => $schedule->name,
             'slug' => '',
         ]);
@@ -112,7 +112,7 @@ class UpdateScheduleTest extends TestCase
         factory(Schedule::class)->create(['slug' => 'test-schedule']);
         $schedule = factory(Schedule::class)->create();
 
-        $response = $this->put('/schedules/' . $schedule->id, [
+        $response = $this->put('/schedules/'.$schedule->id, [
             'name' => 'Updated Schedule',
             'slug' => 'test-schedule',
         ]);
@@ -133,7 +133,7 @@ class UpdateScheduleTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $schedule = factory(Schedule::class)->create();
 
-        $response = $this->put('/schedules/' . $schedule->id, [
+        $response = $this->put('/schedules/'.$schedule->id, [
             'name' => 'Updated Schedule',
             'slug' => str_random(101),
         ]);
@@ -157,7 +157,7 @@ class UpdateScheduleTest extends TestCase
 
         $this->actingAs(factory(User::class)->create());
 
-        $response = $this->put('/schedules/' . $schedule->id, [
+        $response = $this->put('/schedules/'.$schedule->id, [
             'name' => 'Updated Schedule',
             'slug' => 'TEST-schedule',
         ]);
@@ -180,7 +180,7 @@ class UpdateScheduleTest extends TestCase
 
         $this->actingAs(factory(User::class)->create());
 
-        $response = $this->put('/schedules/' . $schedule->id, [
+        $response = $this->put('/schedules/'.$schedule->id, [
             'name'      => $schedule->name,
             'slug'      => $schedule->slug,
             'calendars' => [$calendar->id],
@@ -204,7 +204,7 @@ class UpdateScheduleTest extends TestCase
 
         $this->actingAs(factory(User::class)->create());
 
-        $response = $this->put('/schedules/' . $schedule->id, [
+        $response = $this->put('/schedules/'.$schedule->id, [
             'name'      => $schedule->name,
             'slug'      => $schedule->slug,
             'calendars' => [100],
@@ -229,7 +229,7 @@ class UpdateScheduleTest extends TestCase
 
         $this->actingAs(factory(User::class)->create());
 
-        $response = $this->put('/schedules/' . $schedule->id, [
+        $response = $this->put('/schedules/'.$schedule->id, [
             'name' => $schedule->name,
             'slug' => $schedule->slug,
         ]);
@@ -248,13 +248,13 @@ class UpdateScheduleTest extends TestCase
      */
     public function testCalendarRelationshipsAreOrdered()
     {
-        $schedule  = factory(Schedule::class)->create();
+        $schedule = factory(Schedule::class)->create();
         $calendars = factory(Calendar::class, 2)->create();
         $schedule->calendars()->attach($calendars);
 
         $this->actingAs(factory(User::class)->create());
 
-        $response = $this->put('/schedules/' . $schedule->id, [
+        $response = $this->put('/schedules/'.$schedule->id, [
             'name'      => $schedule->name,
             'slug'      => $schedule->slug,
             'calendars' => $calendars->pluck('id'),

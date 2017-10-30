@@ -23,7 +23,7 @@ interface Importer
     /**
      * Get events from calendar.
      *
-     * @param string $calendar
+     * @param string         $calendar
      * @param \Carbon\Carbon $startDate
      * @param \Carbon\Carbon $endDate
      *
