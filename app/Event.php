@@ -17,7 +17,7 @@ class Event extends Model
         'location',
         'description',
         'start_time',
-        'end_time'
+        'end_time',
     ];
 
     /**

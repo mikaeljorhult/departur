@@ -28,7 +28,7 @@ class ImporterComposer
         return collect(app()->tagged('importers'))
             ->mapWithKeys(function ($item) {
                 return [
-                    $item->id() => $item->name()
+                    $item->id() => $item->name(),
                 ];
             });
     }

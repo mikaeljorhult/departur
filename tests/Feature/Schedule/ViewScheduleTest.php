@@ -5,8 +5,8 @@ namespace Tests\Feature;
 use Departur\Calendar;
 use Departur\Event;
 use Departur\Schedule;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ViewScheduleTest extends TestCase
 {
@@ -21,7 +21,7 @@ class ViewScheduleTest extends TestCase
     {
         $schedule = factory(Schedule::class)->create();
 
-        $response = $this->get('/schedules/' . $schedule->id);
+        $response = $this->get('/schedules/'.$schedule->id);
 
         $response->assertStatus(200);
         $response->assertSee($schedule->name);
@@ -36,7 +36,7 @@ class ViewScheduleTest extends TestCase
     {
         $schedule = factory(Schedule::class)->create();
 
-        $response = $this->get('/s/' . $schedule->slug);
+        $response = $this->get('/s/'.$schedule->slug);
 
         $response->assertStatus(200);
         $response->assertSee($schedule->name);
@@ -51,12 +51,12 @@ class ViewScheduleTest extends TestCase
     {
         $schedule = factory(Schedule::class)->create();
         $calendar = factory(Calendar::class)->create();
-        $event    = factory(Event::class)->create();
+        $event = factory(Event::class)->create();
 
         $schedule->calendars()->save($calendar);
         $calendar->events()->save($event);
 
-        $response = $this->get('/s/' . $schedule->slug);
+        $response = $this->get('/s/'.$schedule->slug);
 
         $response->assertStatus(200);
         $response->assertSee($schedule->name);

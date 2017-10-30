@@ -5,10 +5,10 @@ namespace Tests\Unit\Importers;
 use Departur\Event;
 use Departur\Importers\WebCalImporter;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class WebCalImporterTest extends TestCase
 {
@@ -36,7 +36,7 @@ class WebCalImporterTest extends TestCase
         $webcal = view('tests.ical')->with('events', $events)->render();
         $this->mockHttpResponses([new Response(200, [], $webcal)]);
 
-        $importer       = new WebCalImporter();
+        $importer = new WebCalImporter();
         $returnedEvents = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
@@ -59,7 +59,7 @@ class WebCalImporterTest extends TestCase
         $webcal = view('tests.ical')->render();
         $this->mockHttpResponses([new Response(200, [], $webcal)]);
 
-        $importer       = new WebCalImporter();
+        $importer = new WebCalImporter();
         $returnedEvents = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
@@ -70,6 +70,7 @@ class WebCalImporterTest extends TestCase
      * Get method throws an error if WebCal file is invalid.
      *
      * @expectedException \Departur\Exceptions\InvalidCalendarException
+     *
      * @return void
      */
     public function testErrorIsThrownIfCalendarIsInvalid()
@@ -84,6 +85,7 @@ class WebCalImporterTest extends TestCase
      * Get method throws an error if URL is invalid.
      *
      * @expectedException \Departur\Exceptions\UnreachableCalendarException
+     *
      * @return void
      */
     public function testErrorIsThrownIfURLIsInvalid()
@@ -96,6 +98,7 @@ class WebCalImporterTest extends TestCase
      * Get method throws an error if URL is not found.
      *
      * @expectedException \Departur\Exceptions\UnreachableCalendarException
+     *
      * @return void
      */
     public function testErrorIsThrownIfURLNotFound()
@@ -120,8 +123,8 @@ class WebCalImporterTest extends TestCase
             new Response(404, [], 'webcal-not-found'), // Will not be returned.
         ]);
 
-        $importer        = new WebCalImporter();
-        $firstRetrieval  = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
+        $importer = new WebCalImporter();
+        $firstRetrieval = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
         $secondRetrieval = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
 
         $this->assertTrue(Cache::has('calendar-valid-webcal-url'));

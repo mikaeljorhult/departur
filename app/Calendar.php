@@ -3,7 +3,6 @@
 namespace Departur;
 
 use Collective\Html\Eloquent\FormAccessible;
-use Departur\Importers\ICalImporter;
 use Illuminate\Database\Eloquent\Model;
 
 class Calendar extends Model
@@ -95,7 +94,7 @@ class Calendar extends Model
     public function import()
     {
         // Get importer for type of calendar.
-        $importer = app('importers-' . $this->type);
+        $importer = app('importers-'.$this->type);
 
         // Retrieve and store events from calendar.
         $this->events()->saveMany($importer->get($this->url, $this->start_date, $this->end_date));

@@ -25,9 +25,9 @@ abstract class TestCase extends BaseTestCase
         }
 
         // Setup client and attach responses.
-        $mock    = new MockHandler($responses);
+        $mock = new MockHandler($responses);
         $handler = HandlerStack::create($mock);
-        $client  = new Client(['handler' => $handler]);
+        $client = new Client(['handler' => $handler]);
 
         // Replace Guzzle with mock in service container.
         app()->instance(Client::class, $client);

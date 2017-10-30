@@ -3,9 +3,9 @@
 namespace Tests\Feature;
 
 use Departur\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UpdateUserTest extends TestCase
 {
@@ -24,7 +24,7 @@ class UpdateUserTest extends TestCase
 
         $this->actingAs(factory(User::class)->create());
 
-        $response = $this->put('/users/' . $user->id, [
+        $response = $this->put('/users/'.$user->id, [
             'name'  => 'Updated User',
             'email' => $user->email,
         ]);
@@ -46,7 +46,7 @@ class UpdateUserTest extends TestCase
             'name' => 'Test User',
         ]);
 
-        $response = $this->put('/users/' . $user->id, [
+        $response = $this->put('/users/'.$user->id, [
             'name'  => 'Updated User',
             'email' => $user->email,
         ]);
@@ -67,7 +67,7 @@ class UpdateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $user = factory(User::class)->create();
 
-        $response = $this->put('/users/' . $user->id, [
+        $response = $this->put('/users/'.$user->id, [
             'name'  => '',
             'email' => $user->email,
         ]);
@@ -88,7 +88,7 @@ class UpdateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $user = factory(User::class)->create();
 
-        $response = $this->put('/users/' . $user->id, [
+        $response = $this->put('/users/'.$user->id, [
             'name'  => $user->name,
             'email' => '',
         ]);
@@ -109,7 +109,7 @@ class UpdateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $user = factory(User::class)->create();
 
-        $response = $this->put('/users/' . $user->id, [
+        $response = $this->put('/users/'.$user->id, [
             'name'  => $user->name,
             'email' => 'not-a-valid-email',
         ]);
@@ -132,7 +132,7 @@ class UpdateUserTest extends TestCase
         factory(User::class)->create(['email' => 'test@departur.se']);
         $user = factory(User::class)->create();
 
-        $response = $this->put('/users/' . $user->id, [
+        $response = $this->put('/users/'.$user->id, [
             'name'  => 'Updated User',
             'email' => 'test@departur.se',
         ]);
@@ -153,7 +153,7 @@ class UpdateUserTest extends TestCase
         $this->actingAs(factory(User::class)->create());
         $user = factory(User::class)->create();
 
-        $response = $this->put('/users/' . $user->id, [
+        $response = $this->put('/users/'.$user->id, [
             'name'                  => 'Updated User',
             'email'                 => $user->email,
             'password'              => 'new-password',

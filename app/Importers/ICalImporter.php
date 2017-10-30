@@ -58,7 +58,7 @@ class ICalImporter implements Importer
     /**
      * Get events from calendar.
      *
-     * @param string $calendar
+     * @param string         $calendar
      * @param \Carbon\Carbon $startDate
      * @param \Carbon\Carbon $endDate
      *
@@ -67,9 +67,9 @@ class ICalImporter implements Importer
     public function get(string $calendar, Carbon $startDate, Carbon $endDate)
     {
         // Set variables.
-        $this->calendar  = $calendar;
+        $this->calendar = $calendar;
         $this->startDate = $startDate;
-        $this->endDate   = $endDate;
+        $this->endDate = $endDate;
 
         // Retrieve URL.
         $body = $this->request()->getBody();
@@ -94,14 +94,15 @@ class ICalImporter implements Importer
     /**
      * Retrieve URL for calendar.
      *
-     * @return \GuzzleHttp\Psr7\Response
      * @throws \Departur\Exceptions\UnreachableCalendarException
+     *
+     * @return \GuzzleHttp\Psr7\Response
      */
     private function request()
     {
         $url = $this->url();
 
-        return Cache::remember('calendar-' . $url, 10, function () use ($url) {
+        return Cache::remember('calendar-'.$url, 10, function () use ($url) {
             $client = app(Client::class);
 
             try {
@@ -117,8 +118,9 @@ class ICalImporter implements Importer
     /**
      * @param string $body
      *
-     * @return bool
      * @throws \Departur\Exceptions\InvalidCalendarException
+     *
+     * @return bool
      */
     private function validate(string $body)
     {

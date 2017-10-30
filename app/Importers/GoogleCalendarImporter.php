@@ -57,7 +57,7 @@ class GoogleCalendarImporter implements Importer
     /**
      * Get events from calendar.
      *
-     * @param string $calendar
+     * @param string         $calendar
      * @param \Carbon\Carbon $startDate
      * @param \Carbon\Carbon $endDate
      *
@@ -66,9 +66,9 @@ class GoogleCalendarImporter implements Importer
     public function get(string $calendar, Carbon $startDate, Carbon $endDate)
     {
         // Set variables.
-        $this->calendar  = $calendar;
+        $this->calendar = $calendar;
         $this->startDate = $startDate;
-        $this->endDate   = $endDate;
+        $this->endDate = $endDate;
 
         // Retrieve URL.
         $body = $this->request()->getBody();
@@ -87,31 +87,32 @@ class GoogleCalendarImporter implements Importer
      */
     private function url()
     {
-        $url = 'https://www.googleapis.com/calendar/v3/calendars/' . $this->calendar . '/events';
+        $url = 'https://www.googleapis.com/calendar/v3/calendars/'.$this->calendar.'/events';
 
         $parameters = [
             'singleEvents' => 'true',
-            'timeMin'      => $this->startDate->format('Y-m-d') . 'T00:00:00.000Z',
-            'timeMax'      => $this->endDate->format('Y-m-d') . 'T23:59:59.000Z',
+            'timeMin'      => $this->startDate->format('Y-m-d').'T00:00:00.000Z',
+            'timeMax'      => $this->endDate->format('Y-m-d').'T23:59:59.000Z',
             'orderBy'      => 'startTime',
             'maxResults'   => '500',
-            'key'          => env('GOOGLE_API_KEY')
+            'key'          => env('GOOGLE_API_KEY'),
         ];
 
-        return $url . '?' . http_build_query($parameters);
+        return $url.'?'.http_build_query($parameters);
     }
 
     /**
      * Retrieve URL for calendar.
      *
-     * @return \GuzzleHttp\Psr7\Response
      * @throws \Departur\Exceptions\UnreachableCalendarException
+     *
+     * @return \GuzzleHttp\Psr7\Response
      */
     private function request()
     {
         $url = $this->url();
 
-        return Cache::remember('calendar-' . $url, 10, function () use ($url) {
+        return Cache::remember('calendar-'.$url, 10, function () use ($url) {
             $client = app(Client::class);
 
             try {
@@ -127,8 +128,9 @@ class GoogleCalendarImporter implements Importer
     /**
      * @param string $body
      *
-     * @return bool
      * @throws \Departur\Exceptions\InvalidCalendarException
+     *
+     * @return bool
      */
     private function validate(string $body)
     {
@@ -155,8 +157,8 @@ class GoogleCalendarImporter implements Importer
                 'title'       => isset($event['summary']) ? substr($event['summary'], 0, 255) : '',
                 'location'    => isset($event['location']) ? substr($event['location'], 0, 255) : '',
                 'description' => isset($event['description']) ? $event['description'] : '',
-                'start_time'  => isset($event['start']['dateTime']) ? Carbon::parse($event['start']['dateTime']) : Carbon::parse($event['start']['date'] . 'T00:00:00'),
-                'end_time'    => isset($event['end']['dateTime']) ? Carbon::parse($event['end']['dateTime']) : Carbon::parse($event['start']['date'] . 'T00:00:00')
+                'start_time'  => isset($event['start']['dateTime']) ? Carbon::parse($event['start']['dateTime']) : Carbon::parse($event['start']['date'].'T00:00:00'),
+                'end_time'    => isset($event['end']['dateTime']) ? Carbon::parse($event['end']['dateTime']) : Carbon::parse($event['start']['date'].'T00:00:00'),
             ]);
         });
     }

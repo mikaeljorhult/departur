@@ -4,12 +4,9 @@ namespace Tests\Unit;
 
 use Departur\Calendar;
 use Departur\Event;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class CalendarTest extends TestCase
 {
@@ -22,8 +19,8 @@ class CalendarTest extends TestCase
      */
     public function testCalendarIsActiveIfCurrentDateIsBetweenStartAndEndDate()
     {
-        $activeCalendarA  = factory(Calendar::class)->states('active')->create();
-        $activeCalendarB  = factory(Calendar::class)->states('active')->create();
+        $activeCalendarA = factory(Calendar::class)->states('active')->create();
+        $activeCalendarB = factory(Calendar::class)->states('active')->create();
         $inactiveCalendar = factory(Calendar::class)->states('inactive')->create();
 
         $calendars = Calendar::active()->get();
@@ -41,7 +38,7 @@ class CalendarTest extends TestCase
     public function testEventsAreImportedThroughImport()
     {
         $event = factory(Event::class)->make();
-        $ical  = view('tests.ical')->with('events', [$event])->render();
+        $ical = view('tests.ical')->with('events', [$event])->render();
         $this->mockHttpResponses([new Response(200, [], $ical)]);
 
         $calendar = factory(Calendar::class)->states('active')->create();

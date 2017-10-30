@@ -4,8 +4,8 @@ namespace Tests\Feature;
 
 use Departur\Calendar;
 use Departur\Schedule;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ViewScheduleListingTest extends TestCase
 {
@@ -20,13 +20,13 @@ class ViewScheduleListingTest extends TestCase
     {
         $activeSchedule = factory(Schedule::class)->create();
         $activeSchedule->calendars()->saveMany([
-            factory(Calendar::class)->states('active')->create()
+            factory(Calendar::class)->states('active')->create(),
         ]);
 
         $inactiveScheduleA = factory(Schedule::class)->create();
         $inactiveScheduleB = factory(Schedule::class)->create();
         $inactiveScheduleB->calendars()->saveMany([
-            factory(Calendar::class)->states('inactive')->create()
+            factory(Calendar::class)->states('inactive')->create(),
         ]);
 
         $response = $this->get('/');

@@ -52,7 +52,7 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         User::create($request->all() + [
-                'password' => bcrypt($request->input('password'))
+                'password' => bcrypt($request->input('password')),
             ]);
 
         return redirect('/users');
@@ -88,7 +88,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Departur\Http\Requests\UserUpdateRequest $request
-     * @param \Departur\User $user
+     * @param \Departur\User                            $user
      *
      * @return \Illuminate\Http\Response
      */
@@ -108,7 +108,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Departur\User $user
+     * @param \Departur\User                             $user
      * @param \Departur\Http\Requests\UserDestroyRequest $request
      *
      * @return \Illuminate\Http\Response

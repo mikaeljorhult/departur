@@ -4,10 +4,10 @@ namespace Tests\Unit\Commands;
 
 use Departur\Calendar;
 use Departur\Jobs\ImportCalendar;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ImportCalendarsTest extends TestCase
 {
