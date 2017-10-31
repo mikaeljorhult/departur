@@ -1,6 +1,6 @@
 <ul class="row time time-{{ $key }}">
     @foreach($events as $event)
-        <li class="column event {{ !empty($event->description) ? 'event__truncated' : '' }}">
+        <li class="column event event__color{{ $sortOrder[$event->calendar->id] }} {{ !empty($event->description) ? 'event__truncated' : '' }}">
             <span class="event-date">
                 {{ $event->start_time->format('H:i') }}
                 - {{ $event->end_time->format('H:i') }}:

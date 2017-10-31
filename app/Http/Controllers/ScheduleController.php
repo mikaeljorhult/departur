@@ -70,8 +70,13 @@ class ScheduleController extends Controller
     {
         $schedule->load(['calendars', 'calendars.events']);
 
+        $sortOrder = $schedule->calendars->mapWithKeys(function ($calendar) {
+            return [$calendar->id => $calendar->pivot->sort_order];
+        });
+
         return view('schedules.show')
-            ->with('schedule', $schedule);
+            ->with('schedule', $schedule)
+            ->with('sortOrder', $sortOrder);
     }
 
     /**

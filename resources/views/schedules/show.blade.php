@@ -16,9 +16,14 @@
     <section class="schedule">
         @if($schedule->events->count() > 0)
             <ul class="list-days">
-                @each('schedules._day', $schedule->events->groupBy(function ($item, $key) {
+                @foreach($schedule->events->groupBy(function ($item) {
                     return $item->start_time->format('Y-m-d');
-                }), 'events')
+                }) as $key => $events)
+                    @include('schedules._day', [
+                        'events' => $events,
+                        'sortOrder' => $sortOrder
+                    ])
+                @endforeach
             </ul>
         @endif
     </section>

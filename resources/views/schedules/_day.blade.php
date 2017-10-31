@@ -5,7 +5,12 @@
 ">
     <h4 class="day-title">{{ $key }}</h4>
 
-    @each('schedules._time', $events->groupBy(function ($item, $key) {
+    @foreach($events->groupBy(function ($item, $key) {
         return $item->start_time->format('Hi');
-    }), 'events')
+    }) as $key => $events)
+        @include('schedules._time', [
+            'events' => $events,
+            'sortOrder' => $sortOrder
+        ])
+    @endforeach
 </li>
