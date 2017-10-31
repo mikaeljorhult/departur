@@ -2,6 +2,7 @@
 
 namespace Departur;
 
+use Carbon\Carbon;
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
 

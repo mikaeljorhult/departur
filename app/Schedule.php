@@ -23,7 +23,9 @@ class Schedule extends Model
      */
     public function calendars()
     {
-        return $this->belongsToMany(Calendar::class)->orderBy('sort_order');
+        return $this->belongsToMany(Calendar::class)
+                    ->withPivot('sort_order')
+                    ->orderBy('sort_order');
     }
 
     /**
