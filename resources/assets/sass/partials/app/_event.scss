@@ -7,6 +7,11 @@
 .event {
   position: relative;
   border-left: 2px solid #ccc;
+
+  .row & {
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+  }
 }
 
 .event-title {
@@ -39,4 +44,34 @@
   .event__truncated & {
     display: block;
   }
+}
+
+.event__color0 {
+  background-color: rgba($calendar-color-0, .05);
+  border-color: $calendar-color-0;
+}
+
+.event__color1 {
+  background-color: rgba($calendar-color-1, .05);
+  border-color: $calendar-color-1;
+}
+
+.event__color2 {
+  background-color: rgba($calendar-color-2, .05);
+  border-color: $calendar-color-2;
+}
+
+.event__color3 {
+  background-color: rgba($calendar-color-3, .05);
+  border-color: $calendar-color-3;
+}
+
+.event__color4 {
+  background-color: rgba($calendar-color-4, .05);
+  border-color: $calendar-color-4;
+}
+
+.event__color5 {
+  background-color: rgba($calendar-color-5, .05);
+  border-color: $calendar-color-5;
 }

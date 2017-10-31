@@ -1,9 +1,20 @@
+// Variables
+$calendar-color-0: #06b3db;
+$calendar-color-1: #4ed486;
+$calendar-color-2: #6139f6;
+$calendar-color-3: #e3b63d;
+$calendar-color-4: #dc3d66;
+$calendar-color-5: #bd54cd;
+
+// Third Party
 @import '../../../node_modules/normalize.css/normalize.css';
 @import '../../../node_modules/milligram/src/milligram.sass';
+
 // Shared styles.
 @import './partials/shared/base';
 @import './partials/shared/header';
 @import './partials/shared/footer';
+
 // Partials.
 @import './partials/app/layout';
 @import './partials/app/event';
