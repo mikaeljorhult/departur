@@ -6,9 +6,9 @@
     <h1>{{ $schedule->name }}</h1>
 
     @if($schedule->calendars->count() > 0)
-        <ul>
+        <ul class="calendar-toggle-list">
             @foreach($schedule->calendars as $calendar)
-                <li>{{ $calendar->name }}</li>
+                <li class="calendar-toggle calendar-toggle__color{{ $sortOrder[$calendar->id] }}">{{ $calendar->name }}</li>
             @endforeach
         </ul>
     @endif

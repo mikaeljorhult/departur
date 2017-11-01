@@ -1,0 +1,45 @@
+.schedule {
+  ul {
+    list-style: none;
+  }
+}
+
+.calendar-toggle-list {
+  list-style: none;
+}
+
+.calendar-toggle {
+  &::before {
+    content: '';
+    display: inline-block;
+    width: .5em;
+    height: .5em;
+    vertical-align: middle;
+    margin-right: .5em;
+    background-color: #aaa;
+  }
+}
+
+.calendar-toggle__color0::before {
+  background-color: $calendar-color-0;
+}
+
+.calendar-toggle__color1::before {
+  background-color: $calendar-color-1;
+}
+
+.calendar-toggle__color2::before {
+  background-color: $calendar-color-2;
+}
+
+.calendar-toggle__color3::before {
+  background-color: $calendar-color-3;
+}
+
+.calendar-toggle__color4::before {
+  background-color: $calendar-color-4;
+}
+
+.calendar-toggle__color5::before {
+  background-color: $calendar-color-5;
+}
