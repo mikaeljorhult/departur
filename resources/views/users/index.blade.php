@@ -22,9 +22,11 @@
                         <th scope="row"></th>
                         <td><a href="{{ route('users.edit', $user) }}">{{ $user->email }}</a></td>
                         <td>{{ $user->name }}</td>
-                        <td>
+                        <td class="table-actions">
                             @unless(auth()->user()->is($user))
-                                <a href="{{ route('users.destroy', $user) }}">D</a>
+                                {!! Form::model($user, ['route' => ['users.destroy', $user->id], 'method' => 'DELETE' ]) !!}
+                                    {!! Form::submit('Delete', ['class' => 'button button-outline']) !!}
+                                {!! Form::close() !!}
                             @endunless
                         </td>
                     </tr>

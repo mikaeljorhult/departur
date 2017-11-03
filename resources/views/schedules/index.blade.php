@@ -22,8 +22,10 @@
                         <th scope="row"></th>
                         <td><a href="{{ route('schedules.edit', $schedule) }}">{{ $schedule->name }}</a></td>
                         <td>{{ $schedule->slug }}</td>
-                        <td>
-                            <a href="{{ route('schedules.destroy', $schedule) }}">D</a>
+                        <td class="table-actions">
+                            {!! Form::model($schedule, ['route' => ['schedules.destroy', $schedule->id], 'method' => 'DELETE' ]) !!}
+                                {!! Form::submit('Delete', ['class' => 'button button-outline']) !!}
+                            {!! Form::close() !!}
                         </td>
                     </tr>
                 @empty

@@ -26,8 +26,10 @@
                         <td>{{ $calendar->start_date->format('Y-m-d') }}</td>
                         <td>{{ $calendar->end_date->format('Y-m-d') }}</td>
                         <td><i class="icon calendar-url" data-icon="calendar" title="{{ $calendar->url }}"></i></td>
-                        <td>
-                            <a href="{{ route('calendars.destroy', $calendar) }}">D</a>
+                        <td class="table-actions">
+                            {!! Form::model($calendar, ['route' => ['calendars.destroy', $calendar->id], 'method' => 'DELETE' ]) !!}
+                                {!! Form::submit('Delete', ['class' => 'button button-outline']) !!}
+                            {!! Form::close() !!}
                         </td>
                     </tr>
                 @empty
