@@ -43,3 +43,19 @@
 .calendar-toggle__color5::before {
   background-color: $calendar-color-5;
 }
+
+.hide-past-toggle {
+  display: flex;
+  font-weight: inherit;
+  user-select: none;
+
+  input {
+    margin: 0 .5rem 0 0;
+  }
+}
+
+.hide-past {
+  .day__past {
+    display: none;
+  }
+}

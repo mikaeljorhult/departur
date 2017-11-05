@@ -34,7 +34,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5">No calendars was found.</td>
+                        <td colspan="6">No calendars was found.</td>
                     </tr>
                 @endforelse
             </tbody>

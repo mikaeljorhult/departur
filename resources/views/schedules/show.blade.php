@@ -13,6 +13,10 @@
         </ul>
     @endif
 
+    <label for="hide-past-toggle" class="hide-past-toggle">
+        <input type="checkbox" name="hide-past-toggle" id="hide-past-toggle" />Hide past dates
+    </label>
+
     <section class="schedule">
         @if($schedule->events->count() > 0)
             <ul class="list-days">
