@@ -20,28 +20,10 @@
   }
 }
 
-.calendar-toggle__color0::before {
-  background-color: $calendar-color-0;
-}
-
-.calendar-toggle__color1::before {
-  background-color: $calendar-color-1;
-}
-
-.calendar-toggle__color2::before {
-  background-color: $calendar-color-2;
-}
-
-.calendar-toggle__color3::before {
-  background-color: $calendar-color-3;
-}
-
-.calendar-toggle__color4::before {
-  background-color: $calendar-color-4;
-}
-
-.calendar-toggle__color5::before {
-  background-color: $calendar-color-5;
+@for $i from 1 through length($calendar_colors) {
+  .calendar-toggle__color#{$i - 1}::before {
+    background-color: nth($calendar_colors, $i);
+  }
 }
 
 .hide-past-toggle {

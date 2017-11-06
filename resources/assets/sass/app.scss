@@ -1,10 +1,10 @@
 // Variables
-$calendar-color-0: #06b3db;
-$calendar-color-1: #4ed486;
-$calendar-color-2: #6139f6;
-$calendar-color-3: #e3b63d;
-$calendar-color-4: #dc3d66;
-$calendar-color-5: #bd54cd;
+$calendar_colors: #06b3db,
+  #4ed486,
+  #6139f6,
+  #e3b63d,
+  #dc3d66,
+  #bd54cd;
 
 // Third Party
 @import '../../../node_modules/normalize.css/normalize.css';
