@@ -5,14 +5,16 @@
             {!! Form::text('name', null, ['placeholder' => 'Name']) !!}
         </div>
 
-        <div class="form-group">
-            {!! Form::label('start_date', 'Start Date') !!}
-            {!! Form::text('start_date', null, ['placeholder' => 'Start Date']) !!}
-        </div>
+        <div class="form-group datepicker" data-label="Visible">
+            <div class="datepicker-inputs">
+                {!! Form::label('start_date', 'Start Date') !!}
+                {!! Form::text('start_date', null, ['placeholder' => 'Start Date']) !!}
 
-        <div class="form-group">
-            {!! Form::label('end_date', 'End Date') !!}
-            {!! Form::text('end_date', null, ['placeholder' => 'End Date']) !!}
+                <span>to</span>
+
+                {!! Form::label('end_date', 'End Date') !!}
+                {!! Form::text('end_date', null, ['placeholder' => 'End Date']) !!}
+            </div>
         </div>
 
         <div class="form-group">

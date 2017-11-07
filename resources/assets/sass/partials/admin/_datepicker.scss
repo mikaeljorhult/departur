@@ -1,0 +1,20 @@
+.datepicker-inputs {
+  span {
+    display: none;
+    margin: 0 1rem;
+  }
+
+  .js & {
+    display: flex;
+    align-items: baseline;
+
+    label[for="start_date"],
+    label[for="end_date"] {
+      display: none;
+    }
+
+    span {
+      display: block;
+    }
+  }
+}
