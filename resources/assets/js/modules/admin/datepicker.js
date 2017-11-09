@@ -16,6 +16,9 @@ if (datepickers.length > 0) {
     // Setup flatpickr on start date.
     let startPicker = flatpickr(startDate, {
         defaultDate: startDate.value || 'today',
+        locale: {
+            firstDayOfWeek: 1
+        },
         onChange: function (selectedDate) {
             // End date must be after start date.
             endPicker.set('minDate', selectedDate[0]);
@@ -32,7 +35,10 @@ if (datepickers.length > 0) {
 
     // Setup flatpickr on end date.
     let endPicker = flatpickr(endDate, {
-        defaultDate: endDate.value || addMonths(startPicker.selectedDates[0], 3)
+        defaultDate: endDate.value || addMonths(startPicker.selectedDates[0], 3),
+        locale: {
+            firstDayOfWeek: 1
+        }
     });
 }
 
