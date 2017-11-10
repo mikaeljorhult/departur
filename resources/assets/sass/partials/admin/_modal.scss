@@ -1,0 +1,11 @@
+.basicModal__button {
+  font-weight: normal;
+
+  &#basicModal__action {
+    color: $color-primary;
+  }
+
+  &#basicModal__cancel {
+    font-weight: inherit;
+  }
+}
