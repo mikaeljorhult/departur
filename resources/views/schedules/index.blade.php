@@ -24,7 +24,7 @@
                         <td>{{ $schedule->slug }}</td>
                         <td class="table-actions">
                             {!! Form::model($schedule, ['route' => ['schedules.destroy', $schedule->id], 'method' => 'DELETE' ]) !!}
-                                {!! Form::submit('Delete', ['class' => 'button button-outline']) !!}
+                                {!! Form::submit('Delete', ['class' => 'button button-outline resource-delete']) !!}
                             {!! Form::close() !!}
                         </td>
                     </tr>

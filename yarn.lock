@@ -769,6 +769,10 @@ base64-js@^1.0.2:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.1.tgz#a91947da1f4a516ea38e5b4ec0ec3773675e0886"
 
+basicmodal@^3.3.9:
+  version "3.3.9"
+  resolved "https://registry.yarnpkg.com/basicmodal/-/basicmodal-3.3.9.tgz#5b763244185788cb22b9660b87ab94dbcb79a94a"
+
 batch@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"

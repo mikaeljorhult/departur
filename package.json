@@ -12,6 +12,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome": "^0.0.21",
     "@fortawesome/fontawesome-free-solid": "^0.0.17",
+    "basicmodal": "^3.3.9",
     "cross-env": "^5.1.1",
     "flatpickr": "^4.0.7",
     "laravel-mix": "^1.0",

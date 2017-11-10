@@ -25,7 +25,7 @@
                         <td class="table-actions">
                             @unless(auth()->user()->is($user))
                                 {!! Form::model($user, ['route' => ['users.destroy', $user->id], 'method' => 'DELETE' ]) !!}
-                                    {!! Form::submit('Delete', ['class' => 'button button-outline']) !!}
+                                    {!! Form::submit('Delete', ['class' => 'button button-outline resource-delete']) !!}
                                 {!! Form::close() !!}
                             @endunless
                         </td>

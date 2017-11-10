@@ -28,7 +28,7 @@
                         <td><i class="icon calendar-url" data-icon="calendar" title="{{ $calendar->url }}"></i></td>
                         <td class="table-actions">
                             {!! Form::model($calendar, ['route' => ['calendars.destroy', $calendar->id], 'method' => 'DELETE' ]) !!}
-                                {!! Form::submit('Delete', ['class' => 'button button-outline']) !!}
+                                {!! Form::submit('Delete', ['class' => 'button button-outline resource-delete']) !!}
                             {!! Form::close() !!}
                         </td>
                     </tr>
