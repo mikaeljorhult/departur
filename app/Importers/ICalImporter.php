@@ -56,6 +56,18 @@ class ICalImporter implements Importer
     }
 
     /**
+     * Validation rules to be applied when a calendar is stored or updated.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'url' => ['required', 'url'],
+        ];
+    }
+
+    /**
      * Get events from calendar.
      *
      * @param string         $calendar

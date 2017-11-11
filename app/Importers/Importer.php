@@ -21,6 +21,13 @@ interface Importer
     public function name();
 
     /**
+     * Validation rules to be applied when a calendar is stored or updated.
+     *
+     * @return array
+     */
+    public function rules();
+
+    /**
      * Get events from calendar.
      *
      * @param string         $calendar
