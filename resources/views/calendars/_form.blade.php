@@ -27,7 +27,7 @@
 
                 <label for="file">
                     Select calendar file...
-                    {!! Form::file('file', ['placeholder' => 'Calendar File']) !!}
+                    {!! Form::file('file', ['placeholder' => 'Select calendar file...', 'id' => 'file']) !!}
                 </label>
             </div>
         </div>
