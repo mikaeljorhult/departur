@@ -1,3 +1,14 @@
+label {
+  input[type="file"] {
+    width: .1px;
+    height: .1px;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+}
+
 @media screen and (min-width: 68.0rem) {
   .form-group-combined {
     display: flex;
@@ -10,9 +21,38 @@
       border-bottom-right-radius: 0;
     }
 
+    label {
+      flex: 1 1 auto;
+      height: 3.8rem;
+      overflow: hidden;
+      padding: .6rem 1rem;
+      border: .1rem solid #d1d1d1;
+      border-radius: .4rem;
+      line-height: 1.15;
+      font-weight: inherit;
+      cursor: pointer;
+    }
+
+    label,
     input {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
+  }
+}
+
+.calendar-url {
+  label {
+    display: none;
+  }
+}
+
+.calendar-url__file {
+  input {
+    display: none;
+  }
+
+  label {
+    display: block;
   }
 }

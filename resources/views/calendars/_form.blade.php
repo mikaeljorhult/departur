@@ -20,9 +20,15 @@
         <div class="form-group">
             {!! Form::label('url', 'URL') !!}
 
-            <div class="form-group-combined">
+            <div id="calendar-url" class="form-group-combined calendar-url">
                 {!! Form::select('type', $importers, null, ['disabled' => count($importers) === 1]) !!}
+
                 {!! Form::text('url', null, ['placeholder' => 'URL']) !!}
+
+                <label for="file">
+                    Select calendar file...
+                    {!! Form::file('file', ['placeholder' => 'Calendar File']) !!}
+                </label>
             </div>
         </div>
     </div>
