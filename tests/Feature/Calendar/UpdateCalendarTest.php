@@ -26,7 +26,7 @@ class UpdateCalendarTest extends TestCase
     }
 
     /**
-     * A user can update a calendar.
+     * A user can update an iCal calendar.
      *
      * @return void
      */
@@ -44,6 +44,66 @@ class UpdateCalendarTest extends TestCase
             'end_date'   => $calendar->end_date,
             'type'       => 'ical',
             'url'        => $calendar->url,
+        ]);
+
+        $response->assertRedirect('/calendars');
+        $this->assertDatabaseHas('calendars', [
+            'name' => 'Updated Calendar',
+        ]);
+        Queue::assertPushed(ImportCalendar::class, function ($job) use ($calendar) {
+            return $job->calendar->id === $calendar->id;
+        });
+    }
+
+    /**
+     * A user can update a WebCal calendar.
+     *
+     * @return void
+     */
+    public function testUserCanUpdateWebCalCalendar()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $calendar = factory(Calendar::class)->create([
+            'name' => 'Test Calendar',
+        ]);
+
+        $response = $this->put('/calendars/'.$calendar->id, [
+            'name'       => 'Updated Calendar',
+            'start_date' => $calendar->start_date,
+            'end_date'   => $calendar->end_date,
+            'type'       => 'webcal',
+            'url'        => 'webcal://localhost/calendar',
+        ]);
+
+        $response->assertRedirect('/calendars');
+        $this->assertDatabaseHas('calendars', [
+            'name' => 'Updated Calendar',
+        ]);
+        Queue::assertPushed(ImportCalendar::class, function ($job) use ($calendar) {
+            return $job->calendar->id === $calendar->id;
+        });
+    }
+
+    /**
+     * A user can update a Google calendar.
+     *
+     * @return void
+     */
+    public function testUserCanUpdateGoogleCalendar()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $calendar = factory(Calendar::class)->create([
+            'name' => 'Test Calendar',
+        ]);
+
+        $response = $this->put('/calendars/'.$calendar->id, [
+            'name'       => 'Updated Calendar',
+            'start_date' => $calendar->start_date,
+            'end_date'   => $calendar->end_date,
+            'type'       => 'google-calendar',
+            'url'        => 'default@departur.se',
         ]);
 
         $response->assertRedirect('/calendars');

@@ -26,11 +26,11 @@ class CreateCalendarTest extends TestCase
     }
 
     /**
-     * A user can create a calendar.
+     * A user can create an iCal calendar.
      *
      * @return void
      */
-    public function testUserCanCreateCalendar()
+    public function testUserCanCreateICalCalendar()
     {
         $this->actingAs(factory(User::class)->create());
 
@@ -46,6 +46,56 @@ class CreateCalendarTest extends TestCase
         $this->assertDatabaseHas('calendars', [
             'name' => 'Test Calendar',
             'url'  => 'http://example.com/calendar',
+        ]);
+        Queue::assertPushed(ImportCalendar::class);
+    }
+
+    /**
+     * A user can create an WebCal calendar.
+     *
+     * @return void
+     */
+    public function testUserCanCreateWebCalCalendar()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->post('/calendars', [
+            'name'       => 'Test Calendar',
+            'start_date' => '2017-01-01',
+            'end_date'   => '2017-12-01',
+            'type'       => 'webcal',
+            'url'        => 'webcal://example.com/calendar',
+        ]);
+
+        $response->assertRedirect('/calendars');
+        $this->assertDatabaseHas('calendars', [
+            'name' => 'Test Calendar',
+            'url'  => 'webcal://example.com/calendar',
+        ]);
+        Queue::assertPushed(ImportCalendar::class);
+    }
+
+    /**
+     * A user can create a Googel Calendar.
+     *
+     * @return void
+     */
+    public function testUserCanCreateGoogleCalendar()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->post('/calendars', [
+            'name'       => 'Test Calendar',
+            'start_date' => '2017-01-01',
+            'end_date'   => '2017-12-01',
+            'type'       => 'google-calendar',
+            'url'        => 'default@departur.se',
+        ]);
+
+        $response->assertRedirect('/calendars');
+        $this->assertDatabaseHas('calendars', [
+            'name' => 'Test Calendar',
+            'url'  => 'default@departur.se',
         ]);
         Queue::assertPushed(ImportCalendar::class);
     }
