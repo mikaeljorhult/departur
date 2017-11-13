@@ -97,6 +97,9 @@ class Calendar extends Model
         // Get importer for type of calendar.
         $importer = app('importers-'.$this->type);
 
+        // Delete events from previous imports.
+        $this->events()->delete();
+
         // Retrieve and store events from calendar.
         $this->events()->saveMany($importer->get($this->url, $this->start_date, $this->end_date));
     }

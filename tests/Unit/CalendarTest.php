@@ -50,4 +50,26 @@ class CalendarTest extends TestCase
             'description' => $event->description,
         ]);
     }
+
+    /**
+     * Events are deleted before new ones are imported.
+     *
+     * @return void
+     */
+    public function testEventsAreClearedBeforeNewImport()
+    {
+        $event = factory(Event::class)->make();
+        $ical = view('tests.ical')->with('events', [$event])->render();
+        $this->mockHttpResponses([new Response(200, [], $ical)]);
+
+        $calendar = factory(Calendar::class)->states('active')->create();
+
+        // Import multiple times.
+        $calendar->import();
+        $calendar->import();
+
+        $this->assertCount(1, $calendar->events);
+        $this->assertEquals($event->name, $calendar->events->first()->name);
+        $this->assertEquals($event->description, $calendar->events->first()->description);
+    }
 }
