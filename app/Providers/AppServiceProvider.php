@@ -4,6 +4,7 @@ namespace Departur\Providers;
 
 use Departur\Http\ViewComposers\ImporterComposer;
 use Departur\Importers\GoogleCalendarImporter;
+use Departur\Importers\ICalFileImporter;
 use Departur\Importers\ICalImporter;
 use Departur\Importers\WebCalImporter;
 use Illuminate\Database\SQLiteConnection;
@@ -42,6 +43,13 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->tag('importers-ical', 'importers');
+
+        // iCal (file)
+        $this->app->singleton('importers-ical-file', function () {
+            return new ICalFileImporter();
+        });
+
+        $this->app->tag('importers-ical-file', 'importers');
 
         // WebCal
         $this->app->singleton('importers-webcal', function () {
