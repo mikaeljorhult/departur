@@ -14,14 +14,28 @@ class GoogleCalendarImporterTest extends TestCase
     use RefreshDatabase;
 
     /**
+     * Importer to be tested.
+     *
+     * @var
+     */
+    private static $importer;
+
+    /**
+     * Instantiate a new importer object.
+     */
+    public static function setUpBeforeClass()
+    {
+        self::$importer = new GoogleCalendarImporter();
+    }
+
+    /**
      * Importer can be instantiated.
      *
      * @return void
      */
     public function testGoogleCalendarImporterCanBeInstantiated()
     {
-        $importer = new GoogleCalendarImporter();
-        $this->assertTrue(method_exists($importer, 'get'));
+        $this->assertTrue(method_exists(self::$importer, 'get'));
     }
 
     /**
@@ -35,8 +49,7 @@ class GoogleCalendarImporterTest extends TestCase
         $googleCal = view('tests.google')->with('events', $events)->render();
         $this->mockHttpResponses([new Response(200, [], $googleCal)]);
 
-        $importer = new GoogleCalendarImporter();
-        $returnedEvents = $importer->get('valid-google-url', now()->subYear(), now()->addYear());
+        $returnedEvents = self::$importer->get('valid-google-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(2, $returnedEvents);
@@ -58,8 +71,7 @@ class GoogleCalendarImporterTest extends TestCase
         $googleCal = view('tests.google')->render();
         $this->mockHttpResponses([new Response(200, [], $googleCal)]);
 
-        $importer = new GoogleCalendarImporter();
-        $returnedEvents = $importer->get('valid-google-url', now()->subYear(), now()->addYear());
+        $returnedEvents = self::$importer->get('valid-google-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(0, $returnedEvents);
@@ -76,8 +88,7 @@ class GoogleCalendarImporterTest extends TestCase
     {
         $this->mockHttpResponses([new Response(200, [], 'invalid-google')]);
 
-        $importer = new GoogleCalendarImporter();
-        $importer->get('valid-google-url', now()->subYear(), now()->addYear());
+        self::$importer->get('valid-google-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -89,8 +100,7 @@ class GoogleCalendarImporterTest extends TestCase
      */
     public function testErrorIsThrownIfURLIsInvalid()
     {
-        $importer = new GoogleCalendarImporter();
-        $importer->get('invalid-google-url', now()->subYear(), now()->addYear());
+        self::$importer->get('invalid-google-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -104,8 +114,7 @@ class GoogleCalendarImporterTest extends TestCase
     {
         $this->mockHttpResponses([new Response(404, [], view('tests.google-404')->render())]);
 
-        $importer = new GoogleCalendarImporter();
-        $importer->get('google-not-found-url', now()->subYear(), now()->addYear());
+        self::$importer->get('google-not-found-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -122,9 +131,8 @@ class GoogleCalendarImporterTest extends TestCase
             new Response(404, [], view('tests.google-404')->render()), // Will not be returned.
         ]);
 
-        $importer = new GoogleCalendarImporter();
-        $firstRetrieval = $importer->get('valid-google-url', now()->subYear(), now()->addYear());
-        $secondRetrieval = $importer->get('valid-google-url', now()->subYear(), now()->addYear());
+        $firstRetrieval = self::$importer->get('valid-google-url', now()->subYear(), now()->addYear());
+        $secondRetrieval = self::$importer->get('valid-google-url', now()->subYear(), now()->addYear());
 
         $this->assertEquals($firstRetrieval, $secondRetrieval);
     }

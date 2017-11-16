@@ -15,14 +15,28 @@ class WebCalImporterTest extends TestCase
     use RefreshDatabase;
 
     /**
+     * Importer to be tested.
+     *
+     * @var
+     */
+    private static $importer;
+
+    /**
+     * Instantiate a new importer object.
+     */
+    public static function setUpBeforeClass()
+    {
+        self::$importer = new WebCalImporter();
+    }
+
+    /**
      * Importer can be instantiated.
      *
      * @return void
      */
     public function testWebCalImporterCanBeInstantiated()
     {
-        $importer = new WebCalImporter();
-        $this->assertTrue(method_exists($importer, 'get'));
+        $this->assertTrue(method_exists(self::$importer, 'get'));
     }
 
     /**
@@ -36,8 +50,7 @@ class WebCalImporterTest extends TestCase
         $webcal = view('tests.ical')->with('events', $events)->render();
         $this->mockHttpResponses([new Response(200, [], $webcal)]);
 
-        $importer = new WebCalImporter();
-        $returnedEvents = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
+        $returnedEvents = self::$importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(2, $returnedEvents);
@@ -59,8 +72,7 @@ class WebCalImporterTest extends TestCase
         $webcal = view('tests.ical')->render();
         $this->mockHttpResponses([new Response(200, [], $webcal)]);
 
-        $importer = new WebCalImporter();
-        $returnedEvents = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
+        $returnedEvents = self::$importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(0, $returnedEvents);
@@ -77,8 +89,7 @@ class WebCalImporterTest extends TestCase
     {
         $this->mockHttpResponses([new Response(200, [], 'invalid-webcal')]);
 
-        $importer = new WebCalImporter();
-        $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
+        self::$importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -90,8 +101,7 @@ class WebCalImporterTest extends TestCase
      */
     public function testErrorIsThrownIfURLIsInvalid()
     {
-        $importer = new WebCalImporter();
-        $importer->get('invalid-webcal-url', now()->subYear(), now()->addYear());
+        self::$importer->get('invalid-webcal-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -105,8 +115,7 @@ class WebCalImporterTest extends TestCase
     {
         $this->mockHttpResponses([new Response(404, [], 'webcal-not-found')]);
 
-        $importer = new WebCalImporter();
-        $importer->get('webcal-not-found-url', now()->subYear(), now()->addYear());
+        self::$importer->get('webcal-not-found-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -123,9 +132,8 @@ class WebCalImporterTest extends TestCase
             new Response(404, [], 'webcal-not-found'), // Will not be returned.
         ]);
 
-        $importer = new WebCalImporter();
-        $firstRetrieval = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
-        $secondRetrieval = $importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
+        $firstRetrieval = self::$importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
+        $secondRetrieval = self::$importer->get('valid-webcal-url', now()->subYear(), now()->addYear());
 
         $this->assertTrue(Cache::has('calendar-valid-webcal-url'));
         $this->assertEquals($firstRetrieval, $secondRetrieval);
@@ -144,8 +152,7 @@ class WebCalImporterTest extends TestCase
             new Response(200, [], $webcal),
         ]);
 
-        $importer = new WebCalImporter();
-        $importer->get('webcal://localhost/calendar', now()->subYear(), now()->addYear());
+        self::$importer->get('webcal://localhost/calendar', now()->subYear(), now()->addYear());
 
         $this->assertTrue(Cache::has('calendar-http://localhost/calendar'));
     }

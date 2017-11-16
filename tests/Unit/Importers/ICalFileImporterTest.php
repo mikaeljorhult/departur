@@ -15,6 +15,21 @@ class ICalFileImporterTest extends TestCase
     use RefreshDatabase;
 
     /**
+     * Importer to be tested.
+     *
+     * @var
+     */
+    private static $importer;
+
+    /**
+     * Instantiate a new importer object.
+     */
+    public static function setUpBeforeClass()
+    {
+        self::$importer = new ICalFileImporter();
+    }
+
+    /**
      * Create an uploaded calendar file.
      *
      * @param string $body
@@ -45,8 +60,7 @@ class ICalFileImporterTest extends TestCase
      */
     public function testICalFileImporterCanBeInstantiated()
     {
-        $importer = new ICalFileImporter();
-        $this->assertTrue(method_exists($importer, 'get'));
+        $this->assertTrue(method_exists(self::$importer, 'get'));
     }
 
     /**
@@ -60,8 +74,7 @@ class ICalFileImporterTest extends TestCase
         $ical = view('tests.ical')->with('events', $events)->render();
         $filename = $this->createCalendarFile($ical);
 
-        $importer = new ICalFileImporter();
-        $returnedEvents = $importer->get($filename, now()->subYear(), now()->addYear());
+        $returnedEvents = self::$importer->get($filename, now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(2, $returnedEvents);
@@ -85,8 +98,7 @@ class ICalFileImporterTest extends TestCase
         $ical = view('tests.ical')->render();
         $filename = $this->createCalendarFile($ical);
 
-        $importer = new ICalFileImporter();
-        $returnedEvents = $importer->get($filename, now()->subYear(), now()->addYear());
+        $returnedEvents = self::$importer->get($filename, now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(0, $returnedEvents);
@@ -105,8 +117,7 @@ class ICalFileImporterTest extends TestCase
     {
         $filename = $this->createCalendarFile('invalid-ical');
 
-        $importer = new ICalFileImporter();
-        $importer->get($filename, now()->subYear(), now()->addYear());
+        self::$importer->get($filename, now()->subYear(), now()->addYear());
 
         $this->deleteCalendarFile($filename);
     }
@@ -120,8 +131,7 @@ class ICalFileImporterTest extends TestCase
      */
     public function testErrorIsThrownIfFileNameNotFound()
     {
-        $importer = new ICalFileImporter();
-        $importer->get('not-found.ics', now()->subYear(), now()->addYear());
+        self::$importer->get('not-found.ics', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -135,10 +145,9 @@ class ICalFileImporterTest extends TestCase
         $ical = view('tests.ical')->with('events', $events)->render();
         $filename = $this->createCalendarFile($ical);
 
-        $importer = new ICalFileImporter();
-        $firstRetrieval = $importer->get($filename, now()->subYear(), now()->addYear());
+        $firstRetrieval = self::$importer->get($filename, now()->subYear(), now()->addYear());
         $this->deleteCalendarFile($filename); // Delete file before second read.
-        $secondRetrieval = $importer->get($filename, now()->subYear(), now()->addYear());
+        $secondRetrieval = self::$importer->get($filename, now()->subYear(), now()->addYear());
 
         $this->assertTrue(Cache::has('calendar-'.$filename));
         $this->assertEquals($firstRetrieval, $secondRetrieval);

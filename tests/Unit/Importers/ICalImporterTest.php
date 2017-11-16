@@ -15,14 +15,28 @@ class ICalImporterTest extends TestCase
     use RefreshDatabase;
 
     /**
+     * Importer to be tested.
+     *
+     * @var
+     */
+    private static $importer;
+
+    /**
+     * Instantiate a new importer object.
+     */
+    public static function setUpBeforeClass()
+    {
+        self::$importer = new ICalImporter();
+    }
+
+    /**
      * Importer can be instantiated.
      *
      * @return void
      */
     public function testICalImporterCanBeInstantiated()
     {
-        $importer = new ICalImporter();
-        $this->assertTrue(method_exists($importer, 'get'));
+        $this->assertTrue(method_exists(self::$importer, 'get'));
     }
 
     /**
@@ -36,8 +50,7 @@ class ICalImporterTest extends TestCase
         $ical = view('tests.ical')->with('events', $events)->render();
         $this->mockHttpResponses([new Response(200, [], $ical)]);
 
-        $importer = new ICalImporter();
-        $returnedEvents = $importer->get('valid-ical-url', now()->subYear(), now()->addYear());
+        $returnedEvents = self::$importer->get('valid-ical-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(2, $returnedEvents);
@@ -59,8 +72,7 @@ class ICalImporterTest extends TestCase
         $ical = view('tests.ical')->render();
         $this->mockHttpResponses([new Response(200, [], $ical)]);
 
-        $importer = new ICalImporter();
-        $returnedEvents = $importer->get('valid-ical-url', now()->subYear(), now()->addYear());
+        $returnedEvents = self::$importer->get('valid-ical-url', now()->subYear(), now()->addYear());
 
         $this->assertInstanceOf(Collection::class, $returnedEvents);
         $this->assertCount(0, $returnedEvents);
@@ -77,8 +89,7 @@ class ICalImporterTest extends TestCase
     {
         $this->mockHttpResponses([new Response(200, [], 'invalid-ical')]);
 
-        $importer = new ICalImporter();
-        $importer->get('valid-ical-url', now()->subYear(), now()->addYear());
+        self::$importer->get('valid-ical-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -90,8 +101,7 @@ class ICalImporterTest extends TestCase
      */
     public function testErrorIsThrownIfURLIsInvalid()
     {
-        $importer = new ICalImporter();
-        $importer->get('invalid-ical-url', now()->subYear(), now()->addYear());
+        self::$importer->get('invalid-ical-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -105,8 +115,7 @@ class ICalImporterTest extends TestCase
     {
         $this->mockHttpResponses([new Response(404, [], 'ical-not-found')]);
 
-        $importer = new ICalImporter();
-        $importer->get('ical-not-found-url', now()->subYear(), now()->addYear());
+        self::$importer->get('ical-not-found-url', now()->subYear(), now()->addYear());
     }
 
     /**
@@ -123,9 +132,8 @@ class ICalImporterTest extends TestCase
             new Response(404, [], 'ical-not-found'), // Will not be returned.
         ]);
 
-        $importer = new ICalImporter();
-        $firstRetrieval = $importer->get('valid-ical-url', now()->subYear(), now()->addYear());
-        $secondRetrieval = $importer->get('valid-ical-url', now()->subYear(), now()->addYear());
+        $firstRetrieval = self::$importer->get('valid-ical-url', now()->subYear(), now()->addYear());
+        $secondRetrieval = self::$importer->get('valid-ical-url', now()->subYear(), now()->addYear());
 
         $this->assertTrue(Cache::has('calendar-valid-ical-url'));
         $this->assertEquals($firstRetrieval, $secondRetrieval);
