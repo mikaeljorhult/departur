@@ -1,7 +1,8 @@
 const calendarURL = document.getElementById('calendar-url');
-const typeSelector = calendarURL.getElementsByTagName('select')[0];
+let typeSelector;
 
 if (calendarURL) {
+    typeSelector = calendarURL.getElementsByTagName('select')[0];
     typeSelector.addEventListener('change', toggleFileClass);
     toggleFileClass();
 }
