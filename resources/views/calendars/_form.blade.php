@@ -26,7 +26,7 @@
                 {!! Form::text('url', null, ['placeholder' => 'URL']) !!}
 
                 <label for="file">
-                    Select calendar file...
+                    <span class="file-name">Select calendar file...</span>
                     {!! Form::file('file', ['placeholder' => 'Select calendar file...', 'id' => 'file']) !!}
                 </label>
             </div>
