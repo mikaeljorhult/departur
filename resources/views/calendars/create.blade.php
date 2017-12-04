@@ -6,7 +6,7 @@
     </header>
 
     <section>
-        {!! Form::open(['route' => 'calendars.store']) !!}
+        {!! Form::open(['route' => 'calendars.store', 'files' => true]) !!}
             @include('calendars._form', ['submitButtonText' => 'Create'])
         {!! Form::close() !!}
     </section>

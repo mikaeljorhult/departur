@@ -57,10 +57,21 @@ class CalendarController extends Controller
      */
     public function store(CalendarStoreRequest $request)
     {
-        $calendar = Calendar::create($request->all());
+        $calendar = new Calendar($request->all());
 
+        // Check if file was successfully uploaded.
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            // Move file and save file name with calendar.
+            $calendar->url = $request->file->store('');
+        }
+
+        // Persist calendar.
+        $calendar->save();
+
+        // Sync all schedule relationships.
         $this->syncSchedules($request, $calendar);
 
+        // Queue job to import calendar.
         dispatch(new ImportCalendar($calendar));
 
         return redirect('/calendars');
@@ -105,10 +116,24 @@ class CalendarController extends Controller
      */
     public function update(CalendarUpdateRequest $request, Calendar $calendar)
     {
-        $calendar->update($request->all());
+        $calendar->fill($request->all());
 
+        // Check if file was successfully uploaded.
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            // Delete previous file.
+            Storage::delete();
+
+            // Move file and save file name with calendar.
+            $calendar->url = $request->file->store('');
+        }
+
+        // Persist changes.
+        $calendar->save();
+
+        // Sync all schedule relationships.
         $this->syncSchedules($request, $calendar);
 
+        // Queue job to import calendar.
         dispatch(new ImportCalendar($calendar));
 
         return redirect('/calendars');

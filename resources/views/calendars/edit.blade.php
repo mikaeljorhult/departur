@@ -6,7 +6,7 @@
     </header>
 
     <section>
-        {!! Form::model($calendar, ['route' => ['calendars.update', $calendar->id], 'method' => 'PUT' ]) !!}
+        {!! Form::model($calendar, ['route' => ['calendars.update', $calendar->id], 'method' => 'PUT', 'files' => true]) !!}
             @include('calendars._form', ['submitButtonText' => 'Update'])
         {!! Form::close() !!}
     </section>
