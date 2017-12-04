@@ -130,6 +130,26 @@ class CreateScheduleTest extends TestCase
     }
 
     /**
+     * Schedule slug must contain only alphanumeric characters.
+     *
+     * @return void
+     */
+    public function testSlugMustBeAlphaNumeric()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $response = $this->post('/schedules', [
+            'name' => 'Test Schedule',
+            'slug' => 'test schedule',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('schedules', [
+            'name' => 'Test Schedule',
+        ]);
+    }
+
+    /**
      * Schedule slug is converted to lowercase.
      *
      * @return void

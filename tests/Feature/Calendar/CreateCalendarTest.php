@@ -76,7 +76,7 @@ class CreateCalendarTest extends TestCase
     }
 
     /**
-     * A user can create a Googel Calendar.
+     * A user can create a Google Calendar.
      *
      * @return void
      */
