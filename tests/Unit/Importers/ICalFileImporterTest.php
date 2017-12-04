@@ -37,8 +37,19 @@ class ICalFileImporterTest extends TestCase
      */
     private function createCalendarFile(string $body)
     {
-        $filename = uniqid().'.ics';
+        // Create file with supplied content.
+        $filename = 'test-'.uniqid().'.ics';
         Storage::put($filename, $body);
+
+        // Make sure test file is removed after test is run.
+        $this->beforeApplicationDestroyed(function () {
+            // Get the names of all files starting with "test-".
+            $files = array_filter(Storage::files(), function ($filename) {
+                return substr($filename, 0, 5) === 'test-';
+            });
+
+            Storage::delete($files);
+        });
 
         return $filename;
     }
@@ -119,6 +130,7 @@ class ICalFileImporterTest extends TestCase
 
         self::$importer->get($filename, now()->subYear(), now()->addYear());
 
+        // This will not run as exception is thrown.
         $this->deleteCalendarFile($filename);
     }
 
