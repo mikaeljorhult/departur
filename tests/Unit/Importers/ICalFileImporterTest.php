@@ -33,6 +33,7 @@ class ICalFileImporterTest extends TestCase
      * Create an uploaded calendar file.
      *
      * @param string $body
+     *
      * @return string
      */
     private function createCalendarFile(string $body)
