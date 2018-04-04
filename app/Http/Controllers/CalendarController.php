@@ -9,6 +9,7 @@ use Departur\Http\Requests\CalendarUpdateRequest;
 use Departur\Jobs\ImportCalendar;
 use Departur\Schedule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Storage;
 
 class CalendarController extends Controller
 {
@@ -121,7 +122,9 @@ class CalendarController extends Controller
         // Check if file was successfully uploaded.
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
             // Delete previous file.
-            Storage::delete();
+            if (Storage::has($calendar->url)) {
+                Storage::delete($calendar->url);
+            }
 
             // Move file and save file name with calendar.
             $calendar->url = $request->file->store('');
