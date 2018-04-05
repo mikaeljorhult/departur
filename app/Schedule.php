@@ -36,7 +36,7 @@ class Schedule extends Model
     public function events()
     {
         if ($this->calendars->count() > 0) {
-            $events = Event::whereIn('calendar_id', $this->calendars->pluck('id'))
+            $events = Event::whereIn('calendar_id', $this->calendars->pluck('id')->toArray())
                            ->orderBy('start_time')
                            ->get();
         }
