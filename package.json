@@ -10,8 +10,6 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome": "^1.1.5",
-    "@fortawesome/fontawesome-free-solid": "^5.0.9",
     "basicmodal": "^3.3.9",
     "cross-env": "^5.1.4",
     "flatpickr": "^4.4.3",

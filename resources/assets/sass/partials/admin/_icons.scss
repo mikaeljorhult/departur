@@ -1,8 +1,7 @@
 .icon {
-  vertical-align: middle;
+  display: inline-block;
+  height: 1em;
   margin-right: .5rem;
-
-  + * {
-    vertical-align: text-top;
-  }
+  font-size: inherit;
+  fill: currentColor;
 }

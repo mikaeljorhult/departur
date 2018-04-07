@@ -23,19 +23,19 @@
 
             <ul>
                 <li>
-                    <i class="icon" data-icon="columns"></i>
+                    @svg('browser-window')
                     <a href="{{ route('schedules.index') }}">Schedules</a>
                 </li>
                 <li>
-                    <i class="icon" data-icon="calendar"></i>
+                    @svg('calendar')
                     <a href="{{ route('calendars.index') }}">Calendars</a>
                 </li>
                 <li>
-                    <i class="icon" data-icon="user"></i>
+                    @svg('user')
                     <a href="{{ route('users.index') }}">Users</a>
                 </li>
                 <li>
-                    <i class="icon" data-icon="logout"></i>
+                    @svg('stand-by')
                     <a href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout
