@@ -7,8 +7,8 @@ $calendar_colors: #06b3db,
   #bd54cd;
 
 // Third Party
-@import '../../../node_modules/normalize.css/normalize.css';
-@import '../../../node_modules/milligram/src/milligram.sass';
+@import '../../node_modules/normalize.css/normalize.css';
+@import '../../node_modules/milligram/src/milligram.sass';
 
 // Shared styles.
 @import './partials/shared/base';

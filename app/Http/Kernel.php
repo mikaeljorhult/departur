@@ -58,5 +58,6 @@ class Kernel extends HttpKernel
         'can'           => \Illuminate\Auth\Middleware\Authorize::class,
         'guest'         => \Departur\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle'      => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified'      => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 }
