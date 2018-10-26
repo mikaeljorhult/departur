@@ -8,7 +8,7 @@
 
         <div class="{{ $errors->has('email') ? ' has-error' : '' }}">
             {!! Form::label('email', 'E-Mail Address') !!}
-            {!! Form::email('email', $email or old('email'), ['required' => true, 'autofocus' => true]) !!}
+            {!! Form::email('email', $email ?? old('email'), ['required' => true, 'autofocus' => true]) !!}
 
             @if ($errors->has('email'))
                 <span class="help-block">
